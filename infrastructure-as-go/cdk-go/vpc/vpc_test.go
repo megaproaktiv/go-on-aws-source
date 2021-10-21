@@ -1,8 +1,10 @@
-package main
+package vpc_test
 
 import (
 	"encoding/json"
 	"testing"
+
+	"vpc"
 
 	"github.com/aws/aws-cdk-go/awscdk/v2"
 	"github.com/stretchr/testify/assert"
@@ -14,7 +16,7 @@ func TestVpcStack(t *testing.T) {
 	app := awscdk.NewApp(nil)
 
 	// WHEN
-	stack := NewVpcStack(app, "MyStack", nil)
+	stack := vpc.NewVpcStack(app, "MyStack", nil)
 
 	// THEN
 	bytes, err := json.Marshal(app.Synth(nil).GetStackArtifact(stack.ArtifactId()).Template())
@@ -23,6 +25,6 @@ func TestVpcStack(t *testing.T) {
 	}
 
 	template := gjson.ParseBytes(bytes)
-	displayName := template.Get("Resources.MyTopic86869434.Properties.DisplayName").String()
-	assert.Equal(t, "MyCoolTopic", displayName)
+	cidr := template.Get("Resources.basevpc24F855EE.Properties.CidrBlock").String()
+	assert.Equal(t, "10.0.0.0/16", cidr)
 }
