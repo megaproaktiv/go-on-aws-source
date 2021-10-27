@@ -1,0 +1,23 @@
+package main
+
+import (
+	"context"
+	"fmt"
+	"github.com/aws/aws-sdk-go-v2/service/ec2"
+	"github.com/aws/aws-sdk-go-v2/config"
+)
+
+var client *ec2.Client
+
+func init(){
+	cfg, err := config.LoadDefaultConfig(context.TODO())
+	if err != nil {
+		panic("configuration error, " + err.Error())
+	}
+	client = ec2.NewFromConfig(cfg)
+
+}
+
+func main() {
+	fmt.Println("vim-go")
+}
