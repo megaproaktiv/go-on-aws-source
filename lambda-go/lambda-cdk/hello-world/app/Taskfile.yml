@@ -7,10 +7,12 @@ vars:
 
 tasks:
 
+  
+
   build:
     desc: build go
     cmds:
-      - env GOOS=linux CGO_ENABLED=0 go build -ldflags="-s -w" -o ../dist/main main.go
+      - env GOOS=linux GOARCH=amd64 CGO_ENABLED=0 go build -ldflags="-s -w" -o ../dist/main main.go
       - chmod +x ../dist/main
       - cd ../dist && zip main.zip main
     sources:
@@ -30,7 +32,7 @@ tasks:
     cmds:
       - aws lambda update-function-code --function-name  {{.FN}} --zip-file fileb://../dist/main.zip
 
-  test:
+  test-app:
     desc: all go test
     cmds:
       - go test    
