@@ -1,2 +1,4 @@
 getting_started/hello_world/dist
 infrastructure-as-go/cdk-go/cdk-instance/cdk.context.json
+.DS_Store
+lambda-go/lambda-cdk/hello-world/app/.task
