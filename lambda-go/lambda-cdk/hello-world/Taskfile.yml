@@ -27,6 +27,13 @@ tasks:
       - go get -d github.com/aws/aws-cdk-go/awscdk/v2@{{.version}}
       - go get -d github.com/aws/constructs-go/constructs/v10@{{.constructs}}
 
+  list:
+    dir: infra
+    desc: List stacks 
+    cmds:
+      - npx cdk@{{.version}} ls
+    
+
   diff:
     dir: infra
     desc: Show stack differences
@@ -48,4 +55,4 @@ tasks:
     cmds:
       - cmd: echo Profile $AWSUME_PROFILE
         silent: true
-      -  npx cdk@{{.version}}  destroy --force --profile $AWSUME_PROFILE
+      -  npx  cdk@{{.version}}  destroy --force --profile $AWSUME_PROFILE
