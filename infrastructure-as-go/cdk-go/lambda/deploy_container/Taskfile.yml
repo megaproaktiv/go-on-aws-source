@@ -32,8 +32,7 @@ tasks:
     cmds:
       - cdkstat lambda-go-arm
       - aws ecr describe-repositories
-      - export name=`aws ecr describe-repositories | jq '.repositories[0].repositoryName' | tr -d '"' `
-      - aws ecr list-images --repository-name $name
+      - export name=`aws ecr describe-repositories | jq '.repositories[0].repositoryName' | tr -d '"' ` && aws ecr list-images --repository-name $name
 
   destroy:
     desc: 5 - Destroy Resources
