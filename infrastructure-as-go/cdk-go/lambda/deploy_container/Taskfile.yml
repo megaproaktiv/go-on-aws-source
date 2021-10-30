@@ -1,0 +1,42 @@
+# https://taskfile.dev
+
+version: '3'
+
+vars:
+  GREETING: Hello, World!
+
+tasks:
+  test:
+    desc: 1 - Test
+    dir: infra
+    cmds:
+      - go test
+    silent: true
+
+  deploy:
+    desc: 2 - deploy
+    dir: infra
+    cmds:
+      - cdk deploy --require-approval never
+    silent: true
+
+  invoke:
+    desc: 3 - invoke arm
+    dir: infra
+    cmds:
+      - aws lambda invoke --function-name hellodockerarm  --payload fileb://testdata/event.json testdata/lambda.out
+      - cat testdata/lambda.out
+
+  show: 
+    desc: 4 - Show resources and container registry
+    cmds:
+      - cdkstat lambda-go-arm
+      - aws ecr describe-repositories
+      - export name=`aws ecr describe-repositories | jq '.repositories[0].repositoryName' | tr -d '"' `
+      - aws ecr list-images --repository-name $name
+
+  destroy:
+    desc: 5 - Destroy Resources
+    dir: infra
+    cmds:
+      - cdk destroy --force
