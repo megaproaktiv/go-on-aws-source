@@ -4,3 +4,5 @@ getting_started/hello_world/dist
 infrastructure-as-go/cdk-go/cdk-instance/cdk.context.json
 lambda-go/lambda-cdk/hello-world/dist/main
 lambda-go/lambda-cdk/hello-world/dist/main.zip
+lambda-go/simple-lambda/dist
+lambda-go/simple-lambda/testdata/lambda.out
