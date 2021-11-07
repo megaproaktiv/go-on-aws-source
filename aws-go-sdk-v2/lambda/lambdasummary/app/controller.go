@@ -2,6 +2,8 @@ package lambdasummary
 
 import (
 	"context"
+	"sync"
+
 	"github.com/aws/aws-sdk-go-v2/config"
 	"github.com/aws/aws-sdk-go-v2/service/lambda"
 	"github.com/aws/aws-sdk-go-v2/service/sts"
@@ -18,6 +20,8 @@ func init() {
 	stsclient = sts.NewFromConfig(cfg)
 }
 
+var wg sync.WaitGroup
+
 func Collect(accounts []string, regions []string) ([]*LambdaSummary, error) {
 
 	var summaries []*LambdaSummary
@@ -28,29 +32,35 @@ func Collect(accounts []string, regions []string) ([]*LambdaSummary, error) {
 			log.Warn("Not able to assume account role: ", account)
 		} else {
 			for _, region := range regions {
-			
-				
-				client := lambda.NewFromConfig(cfgSub)
-				collection := ListFunctions(client, &account, &region)
-				
-				counter := LambdaSummary{
-					Account:        account,
-					Region:         region,
-					RuntimeCounter: map[string]int{},
-				}
-				for _, i := range collection {
-					_, ok := counter.RuntimeCounter[i.Runtime]
-					if ok {
-						counter.RuntimeCounter[i.Runtime] = counter.RuntimeCounter[i.Runtime] + 1
+				log.Info("Account: ",account, " Region: ", region)
+				go func(mysummaries *[]*LambdaSummary, account string, region string) {
+					defer wg.Done()
+
+					client := lambda.NewFromConfig(cfgSub)
+					collection := ListFunctions(client, account, region)
+
+					counter := LambdaSummary{
+						Account:        account,
+						Region:         region,
+						RuntimeCounter: map[string]int{},
+					}
+					for _, i := range collection {
+						_, ok := counter.RuntimeCounter[i.Runtime]
+						if ok {
+							counter.RuntimeCounter[i.Runtime] = counter.RuntimeCounter[i.Runtime] + 1
 						} else {
 							counter.RuntimeCounter[i.Runtime] = 1
 						}
-						
+
 					}
-					summaries = append(summaries, &counter)
+					*mysummaries = append(*mysummaries, &counter)
+				}(&summaries, account, region)
+				wg.Add(1)
+
 			}
 		}
 	}
+	wg.Wait()
 
 	return summaries, nil
 

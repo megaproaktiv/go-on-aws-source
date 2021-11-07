@@ -18,7 +18,7 @@ type LambdaInfo struct {
 
 const max = 100
 
-func ListFunctions(client *lambda.Client, account *string, region *string) []*LambdaInfo {
+func ListFunctions(client *lambda.Client, account string, region string) []*LambdaInfo {
 
 	lambdaFunctions := []*LambdaInfo{}
 
@@ -27,7 +27,7 @@ func ListFunctions(client *lambda.Client, account *string, region *string) []*La
 	}
 
 	result, err := client.ListFunctions(context.TODO(), params, func(options *lambda.Options) {
-		options.Region = *region
+		options.Region = region
 	})
 	if err != nil {
 		fmt.Println("Got an error retrieving functions:")
@@ -40,8 +40,8 @@ func ListFunctions(client *lambda.Client, account *string, region *string) []*La
 			Name:    *item.FunctionName,
 			Runtime: string(item.Runtime),
 			Memory:  *item.MemorySize,
-			Account: *account,
-			Region:  *region,
+			Account: account,
+			Region:  region,
 		}
 		lambdaFunctions = append(lambdaFunctions, info)
 	}

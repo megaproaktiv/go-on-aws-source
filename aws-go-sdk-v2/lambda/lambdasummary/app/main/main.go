@@ -57,7 +57,7 @@ func HandleRequest(ctx context.Context, name MyEvent) (string, error) {
 
 	content := lambdasummary.Render(*infoPageData)
 
-	fmt.Println(content)
+	
 	return content, nil
 }
 

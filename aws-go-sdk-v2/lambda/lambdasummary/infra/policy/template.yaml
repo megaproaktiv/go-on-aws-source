@@ -1,5 +1,5 @@
 Resources:
-  CrossAccountGroupListRole:
+  CrossAccountFunctionListRole:
     Type: 'AWS::IAM::Role'
     Properties:
       AssumeRolePolicyDocument:
