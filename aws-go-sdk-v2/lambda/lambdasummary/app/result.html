@@ -1,0 +1,19 @@
+<table style="background-color:#FFFFE0;">
+    <tr style="background-color:#BDB76B;">
+        <th>Account</th>
+        <th>Region</th>
+        <th>Runtimes</th>
+    </tr>
+    {{range .Summaries}}
+    <tr>
+        <td>{{.Account}}</td>
+        <td>{{.Region}}</td>
+        <td>
+            {{ range $key, $value := .RuntimeCounter }}
+            <li><strong>{{ $key }}</strong>: {{ $value }}</li>
+            {{ end }}
+        </td>
+    </tr>
+    {{end}}
+
+</table>

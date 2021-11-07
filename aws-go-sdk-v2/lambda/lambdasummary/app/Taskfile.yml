@@ -1,0 +1,33 @@
+# https://taskfile.dev
+
+version: '3'
+
+vars:
+  NAME: showfunctions
+
+tasks:
+  runlocal:
+    desc: call local main
+    cmds:
+      - go run -tags local main/local.go
+    silent: true
+
+  build:
+    desc: build go
+    cmds:
+      - env GOOS=linux GOARCH=amd64 go build -tags cloud -ldflags="-s -w" -o ./dist/main main/main.go
+      - chmod +x ./dist/main
+      - cp result.html ./dist
+      - cd ./dist && zip main.zip main result.html
+
+  deploy:
+      desc: Deploy only Lambda function
+      deps: [build]
+      cmds:
+        - aws lambda update-function-code --function-name  {{.NAME}} --zip-file fileb://./dist/main.zip  
+
+  invoke:
+    desc: invoke lambda
+    cmds:
+      - aws lambda invoke --function-name {{.NAME}}  --payload fileb://testdata/event.json testdata/lambda.out
+      - cat testdata/lambda.out

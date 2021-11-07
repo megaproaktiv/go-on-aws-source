@@ -1,0 +1,18 @@
+# https://taskfile.dev
+
+version: '3'
+
+vars:
+  STACK: AuditListFunctions
+  REGION: eu-central-1
+  NAME: showfunction
+
+
+tasks:
+  trust:
+    desc: deploy CloudFormation in trustee account
+    cmds:
+      - aws cloudformation deploy --template-file policy/template.yaml --stack-name {{.STACK}} --capabilities CAPABILITY_NAMED_IAM
+      - npx cfn-tail --region {{.REGION}} {{.STACK}}
+    #silent: true
+

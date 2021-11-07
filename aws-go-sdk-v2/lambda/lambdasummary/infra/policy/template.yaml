@@ -1,0 +1,22 @@
+Resources:
+  CrossAccountGroupListRole:
+    Type: 'AWS::IAM::Role'
+    Properties:
+      AssumeRolePolicyDocument:
+        Statement:
+          - Action: 'sts:AssumeRole'
+            Effect: Allow
+            Principal:
+              AWS: 'arn:aws:iam::111111111111:role/showfunctionsrole'
+        Version: 2012-10-17
+      RoleName: CrossAccountListFunctionsRole
+      Path: /
+      Policies:
+        - PolicyName: listlambda
+          PolicyDocument:
+            Version: 2012-10-17
+            Statement:
+              - Effect: Allow
+                Action:
+                  - 'lambda:ListFunctions'
+                Resource: '*'

@@ -6,3 +6,4 @@ lambda-go/lambda-cdk/hello-world/dist/main
 lambda-go/lambda-cdk/hello-world/dist/main.zip
 lambda-go/simple-lambda/dist
 lambda-go/simple-lambda/testdata/lambda.out
+aws-go-sdk-v2/lambda/lambdasummary/app/dist
