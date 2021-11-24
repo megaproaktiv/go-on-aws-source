@@ -1,14 +1,18 @@
 package eventutils_test
 
 import (
+	// Prepare Testdata
 	"encoding/json"
-	"eventutils"
-	"fmt"
 	"io/ioutil"
 	"os"
-	"testing"
-
+	"fmt"
+	
+	// The function to be tested
+	"eventutils"
 	"github.com/aws/aws-lambda-go/events"
+	
+	// Imports for automated testing
+	"testing"
 	"gotest.tools/assert"
 )
 
