@@ -1,0 +1,63 @@
+# https://taskfile.dev
+
+version: '3'
+
+
+tasks:
+
+  build:
+    desc: build go files
+    cmds:
+      - go build -o dist/dosshow main/main.go
+    silent: true
+
+  run:
+    desc: run server
+    cmds:
+      - go run main/main.go
+
+  build-linux:
+    desc: Build Linux Image
+    cmds:
+      - cmd: mkdir dist 
+        ignore_error: true 
+      - CGO_ENABLED=0  GOOS=linux GOARCH=amd64 go build -o dist/dosshow -ldflags '-w' main/main.go
+      - chmod +x dist/dosshow
+
+  docker-build:
+    desc: Build docker image
+    deps: [build-linux]
+    cmds:
+      - docker build -t dosshow .
+
+  docker-run:
+    desc: run docker local
+    cmds:
+      - docker run -d -p 8081:8080  -e AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID -e AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY dosshow
+    silent: true
+
+  dist:
+    desc: prepare distribution
+    deps: [build-linux]
+    cmds:
+      - cmd: mkdir dist dist/templates dist/assets dist/assets/css dist/assets/js dist/dist
+        ignore_error: true 
+      - cmd: rm dist/templates/*
+        ignore_error: true 
+      - cmd: rm dist/assets/css/*
+        ignore_error: true 
+      - cmd: rm dist/assets/js/*
+        ignore_error: true 
+      - cp templates/* dist/templates  
+      - cp assets/css/* dist/assets/css
+      - cp assets/js/* dist/assets/js
+      - cp Dockerfile dist
+      - cp dist/dosshow dist/dist/dosshow
+
+  deploy:
+    desc: Copy locally
+    deps: [dist]
+    cmds:
+      - rm -rf ../infra/dist
+      - cp -pr dist ../infra/dist
+

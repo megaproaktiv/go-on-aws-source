@@ -1,0 +1,76 @@
+{
+  "vpc-provider:account=669453403305:filter.isDefault=false:filter.vpc-id=vpc-0d58ffab71df9c3d6:region=eu-central-1:returnAsymmetricSubnets=true": {
+    "vpcId": "vpc-0d58ffab71df9c3d6",
+    "vpcCidrBlock": "10.0.0.0/16",
+    "availabilityZones": [],
+    "subnetGroups": [
+      {
+        "name": "Public",
+        "type": "Public",
+        "subnets": [
+          {
+            "subnetId": "subnet-0f40e763629c821aa",
+            "cidr": "10.0.0.0/18",
+            "availabilityZone": "eu-central-1a",
+            "routeTableId": "rtb-03d30097f02536a17"
+          },
+          {
+            "subnetId": "subnet-0be7b9a4270c8da85",
+            "cidr": "10.0.64.0/18",
+            "availabilityZone": "eu-central-1b",
+            "routeTableId": "rtb-0e084f37275790b56"
+          }
+        ]
+      },
+      {
+        "name": "Private",
+        "type": "Private",
+        "subnets": [
+          {
+            "subnetId": "subnet-0265e174063fcb669",
+            "cidr": "10.0.128.0/18",
+            "availabilityZone": "eu-central-1a",
+            "routeTableId": "rtb-043c66a78ab4a04ec"
+          },
+          {
+            "subnetId": "subnet-050c457280cae9bda",
+            "cidr": "10.0.192.0/18",
+            "availabilityZone": "eu-central-1b",
+            "routeTableId": "rtb-05cad04ceeb225111"
+          }
+        ]
+      }
+    ]
+  },
+  "vpc-provider:account=795048271754:filter.isDefault=false:filter.vpc-id=vpc-0cd99476a9a9c8579:region=eu-central-1:returnAsymmetricSubnets=true": {
+    "vpcId": "vpc-0cd99476a9a9c8579",
+    "vpcCidrBlock": "10.0.0.0/16",
+    "availabilityZones": [],
+    "subnetGroups": [
+      {
+        "name": "Public",
+        "type": "Public",
+        "subnets": [
+          {
+            "subnetId": "subnet-0c04092e7da442a6a",
+            "cidr": "10.0.0.0/17",
+            "availabilityZone": "eu-central-1a",
+            "routeTableId": "rtb-02ee58769f0015ef7"
+          }
+        ]
+      },
+      {
+        "name": "Private",
+        "type": "Private",
+        "subnets": [
+          {
+            "subnetId": "subnet-0df3196e95a4cc519",
+            "cidr": "10.0.128.0/17",
+            "availabilityZone": "eu-central-1a",
+            "routeTableId": "rtb-051e2b23776fb66e7"
+          }
+        ]
+      }
+    ]
+  }
+}
