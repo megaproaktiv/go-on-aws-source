@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Results Item Table</title>
+      <!--Import Google Icon Font-->
+      <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+      <!--Import materialize.css-->
+      <link type="text/css" rel="stylesheet" href="css/materialize.min.css"  media="screen,projection"/>
+
+      <!--Let browser know website is optimized for mobile-->
+      <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+</head>
+
+<body>
+    <h1 class="header center orange-text">Results Item Table</h1>    
+    <div>
+        <div class="container">
+            <table>
+                <tr>
+                    <td> <b>Key</b></td>
+                </tr>
+                
+                {{range .Results}}
+
+                <tr>
+                    <td>
+                        "{{.ItemID}}" 
+                    </td>
+                </tr>
+                <tr>
+                <td>
+                    <a href="/">Back</a>
+                </td>
+                </tr>
+
+                {{end}}
+
+            </table>
+        </div>
+        
+    </div>
+
+</body>
+
+</html>

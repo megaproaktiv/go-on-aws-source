@@ -1,0 +1,66 @@
+# https://taskfile.dev
+
+version: '3'
+
+vars:
+  GREETING: Hello, World!
+
+includes:
+  container:
+    taskfile: ./app/Taskfile.yml
+    dir: ./app
+
+tasks:
+  build-app:
+    desc: 0 - build app
+    dir: app
+    cmds:
+      - task: container:deploy
+    silent: true
+
+  deploy-vpc:
+    desc: 1 - Deploy a VPC
+    dir: infra/1-vpc
+    cmds:
+      - cdk deploy -f
+    silent: true
+
+  deploy-table:
+    desc: 2 - Deploy a table
+    dir: infra/2-table
+    cmds:
+      - cdk deploy -f
+    silent: true
+
+  deploy-container:
+    desc: 3 - deploy  Container
+    dir: infra/3-container
+    cmds:
+      - cdk deploy -f --require-approval never
+    silent: true
+
+  destroy-container:
+    desc: 4 - destroy  Container
+    dir: infra/3-container
+    cmds:
+      - cdk destroy -f
+    silent: true
+
+  destroy-table:
+    desc: 5 - destroy  table
+    dir: infra/2-table
+    cmds:
+      - cdk destroy -f
+    silent: true
+
+  destroy-vpc:
+    desc: 6 - destroy  VPC
+    dir: infra/1-vpc
+    cmds:
+      - cdk destroy -f
+    silent: true
+
+  show:
+    desc: Show stacks
+    cmds:
+      - cdkstat  

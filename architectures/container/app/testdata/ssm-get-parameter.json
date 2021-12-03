@@ -1,0 +1,11 @@
+{
+    "Parameter": {
+        "Name": "/go-on-aws/table",
+        "Type": "String",
+        "Value": "objectlister-items07D08F4B-KSHYJ5OP4BRW",
+        "Version": 1,
+        "LastModifiedDate": "2021-11-17T08:26:50.213000+01:00",
+        "ARN": "arn:aws:ssm:eu-central-1:555555555555:parameter/go-on-aws/table",
+        "DataType": "text"
+    }
+}
