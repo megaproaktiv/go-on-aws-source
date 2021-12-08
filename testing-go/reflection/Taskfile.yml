@@ -1,0 +1,34 @@
+# https://taskfile.dev
+
+version: '3'
+
+vars:
+  parametername: "/go-on-aws/table" 
+
+tasks:
+  create:
+    desc: write parameter
+    cmds:
+      - aws ssm put-parameter --name {{.parametername}} --type "String" --value "ordinarytablename"
+    silent: true
+
+  read:
+    desc: read parameter
+    cmds:
+      - aws ssm get-parameter --name {{.parametername}}
+    silent: true
+
+  delete:
+    desc: delete paramater
+    cmds:
+      - aws ssm delete-parameter --name {{.parametername}}
+
+  test:
+    desc: call go test
+    cmds:
+      - go test -v
+      
+  run:
+    desc: run go main
+    cmds:
+      - go run main/main.go    
