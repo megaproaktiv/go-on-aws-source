@@ -15,3 +15,6 @@ architectures/container/app/dist
 cdk.out
 architectures/container/infra/1-vpc/dist
 architectures/container/infra/tmp
+infrastructure-as-go/cdk-go/lambda/dsl/app/dist
+infrastructure-as-go/cdk-go/thecdkbook/chapter6/customresource/app/dist
+infrastructure-as-go/cdk-go/thecdkbook/chapter6/customresource/dist
