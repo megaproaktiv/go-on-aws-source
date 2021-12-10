@@ -3,4 +3,4 @@
 Differences to the book:
 
 - All examples are complete cdk apps, tested for `cdk synth` works
-- Project is not used
+- projen is not used, in GO dependency handling is good out of the box
