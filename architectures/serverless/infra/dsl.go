@@ -1,21 +1,21 @@
-package main
+package dsl
 
 import (
 	"log"
 	"os"
 	"path/filepath"
+
+	"github.com/aws/aws-sdk-go-v2/aws"
+
 	"github.com/aws/aws-cdk-go/awscdk/v2"
 	"github.com/aws/aws-cdk-go/awscdk/v2/awslambda"
+	event "github.com/aws/aws-cdk-go/awscdk/v2/awslambdaeventsources"
 	"github.com/aws/aws-cdk-go/awscdk/v2/awss3"
 	"github.com/aws/aws-cdk-go/awscdk/v2/awsdynamodb"
 	"github.com/aws/constructs-go/constructs/v10"
-	// "github.com/aws/jsii-runtime-go"
-
-	"github.com/aws/aws-sdk-go-v2/aws"
-	
-	
 	logs "github.com/aws/aws-cdk-go/awscdk/v2/awslogs"
 	"github.com/aws/aws-cdk-go/awscdk/v2/awss3assets"	
+	"github.com/aws/aws-cdk-go/awscdk/v2/awsssm"	
 )
 
 type DslStackProps struct {
@@ -29,12 +29,13 @@ func NewDslStack(scope constructs.Construct, id string, props *DslStackProps) aw
 	}
 	stack := awscdk.NewStack(scope, &id, &sprops)
 
+	// Lambda start ***********
 	path, err := os.Getwd()
 	if err != nil {
 		log.Println(err)
 	}
-	lambdaPath := filepath.Join(path, "../dist/main.zip")
-
+	lambdaPath := filepath.Join(path, "../app/dist/main.zip")
+	
 	myHandler := awslambda.NewFunction(stack, aws.String("myHandler"), 
 	&awslambda.FunctionProps{
 		Description:                  aws.String("dsl - dynamodb s3 lambda"),
@@ -46,6 +47,14 @@ func NewDslStack(scope constructs.Construct, id string, props *DslStackProps) aw
 		Handler: aws.String("main"),
 		Runtime: awslambda.Runtime_GO_1_X(),
 	})
+	awsssm.NewStringParameter(stack, aws.String("handler-output"), 
+		&awsssm.StringParameterProps{
+			Description:    aws.String("Store lambda function name"),
+			ParameterName:  aws.String("/goa-serverless/handler"),
+			StringValue: myHandler.FunctionName(),
+		},
+	)
+	// Lambda end ***********
 
 	// Bucket start ****************
     // *
@@ -61,7 +70,13 @@ func NewDslStack(scope constructs.Construct, id string, props *DslStackProps) aw
 	// *
 	// Bucket end *******************
 
-	//** Dynamodb start */
+	// Event start *******************
+	myHandler.AddEventSource(event.NewS3EventSource(bucky, &event.S3EventSourceProps{
+		Events:  &[]awss3.EventType{awss3.EventType_OBJECT_CREATED,},
+	}))
+	// Event End   *******************
+
+	//** Dynamodb start ******
     // do not force table name, this leads to singleTimeDeployability
     myTable := awsdynamodb.NewTable(stack, aws.String("items"), &awsdynamodb.TableProps{
     	PartitionKey:               &awsdynamodb.Attribute{
@@ -73,7 +88,14 @@ func NewDslStack(scope constructs.Construct, id string, props *DslStackProps) aw
   
 	myTable.GrantReadWriteData(myHandler);
 	myHandler.AddEnvironment(aws.String("TableName"), myTable.TableName(), nil);
-
-
+	awsssm.NewStringParameter(stack, aws.String("table-output"), 
+		&awsssm.StringParameterProps{
+			Description:    aws.String("Store ltable name"),
+			ParameterName:  aws.String("/goa-serverless/table"),
+			StringValue: myTable.TableName(),
+		},
+	)
+	//** Dynamodb end ******
+	
 	return stack
 }

@@ -33,16 +33,10 @@ func putItem(itemID string, tableName string){
 	// Using the SDK's default configuration, loading additional config
 	// and credentials values from the environment variables, shared
 	// credentials, and shared configuration files
-	cfg, err := config.LoadDefaultConfig(config.WithRegion("eu-west-1"))
+	cfg, err := config.LoadDefaultConfig()
 	if err != nil {
 		panic("unable to load SDK config, " + err.Error())
 	}
-
-
-
-	// Set the AWS Region that the service clients should use
-	cfg.Region = "eu-west-1"
-
 	// Using the Config value, create the DynamoDB client
 	client := dynamodb.NewFromConfig(cfg)
 

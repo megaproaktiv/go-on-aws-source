@@ -2,7 +2,7 @@
 
 ## Build Management only for go
 
-version: '2'
+version: '3'
 
 env:
   AWS_DEFAULT_REGION: eu-central-1
@@ -14,14 +14,14 @@ tasks:
   build:
     desc: build go
     cmds:
-      - env GOOS=linux go build -ldflags="-s -w" -o dist/main main/main.go
+      - env GOOS=linux GOARCH=amd64 go build -ldflags="-s -w" -o dist/main main/main.go
       - chmod +x dist/main
       - cd dist && zip main.zip main
     sources:
       - ./*.go
       - main/*.go
     generates:
-      - dist/main
+      - dist/main.zip
     silent: true
 
   fastdeploy:
@@ -29,7 +29,7 @@ tasks:
     deps: [build]
     vars:
       FN:      
-        sh: aws cloudformation list-exports --query "Exports[?Name == 'lambda-go-v2-cdk-name'].Value" --output text
+        sh: aws ssm get-parameter --name "/goa-serverless/handler" --query "Parameter.Value" --output text
     cmds:
       - aws lambda update-function-code --function-name  {{.FN}} --zip-file fileb://dist/main.zip
 
@@ -40,9 +40,9 @@ tasks:
       AWS_PAGER: ""
     vars:
       FN:      
-        sh: aws cloudformation list-exports --query "Exports[?Name == 'lambda-go-v2-name'].Value" --output text
+        sh: aws ssm get-parameter --name "/goa-serverless/handler" --query "Parameter.Value" --output text
       TABLE:      
-        sh: aws cloudformation list-exports --query "Exports[?Name == 'Table-go-v2-name'].Value" --output text
+        sh: aws ssm get-parameter --name "/goa-serverless/table" --query "Parameter.Value" --output text
     cmds:
       - time aws lambda invoke --function-name {{.FN}} --payload fileb://./test/put.json  test/result.json
       - date
