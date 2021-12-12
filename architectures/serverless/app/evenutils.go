@@ -1,4 +1,4 @@
-package trick
+package dsl
 
 import (
 	"github.com/aws/aws-lambda-go/events"

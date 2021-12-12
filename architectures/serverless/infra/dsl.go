@@ -60,8 +60,14 @@ func NewDslStack(scope constructs.Construct, id string, props *DslStackProps) aw
     // *
     bucky := awss3.NewBucket(stack, aws.String("incoming-gov2"), &awss3.BucketProps{
     	BlockPublicAccess:      awss3.BlockPublicAccess_BLOCK_ALL(),
-    });
-	
+    });	
+	awsssm.NewStringParameter(stack, aws.String("bucket-output"), 
+	&awsssm.StringParameterProps{
+		Description:    aws.String("Store bucket name"),
+		ParameterName:  aws.String("/goa-serverless/bucket"),
+		StringValue: bucky.BucketName(),
+	},
+)
 	// Tell Lambda the dynamic bucket name
 	myHandler.AddEnvironment(aws.String("Bucket"), bucky.BucketName(), nil);
 	// *

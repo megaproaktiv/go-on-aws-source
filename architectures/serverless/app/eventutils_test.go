@@ -1,14 +1,15 @@
-package trick_test
+package dsl_test
 
 import (
-	"encoding/json"
 	"fmt"
-	"github.com/stretchr/testify/assert"
-	"github.com/aws/aws-lambda-go/events"
-    "io/ioutil"
 	"os"
 	"testing"
-	"trick"
+    "io/ioutil"
+	"encoding/json"
+	"gotest.tools/assert"
+	
+	"github.com/aws/aws-lambda-go/events"
+	"dsl"
 )
 
 func TestExtractObject(t *testing.T){
@@ -34,8 +35,8 @@ func TestExtractObject(t *testing.T){
 
 	assert.Equal(t,nil,err);
 
-	expectedKey := "object-key"
-	realKey := trick.ExtractKey(s3event);
+	expectedKey := "my2etestkey.txt"
+	realKey := dsl.ExtractKey(s3event);
 
 	assert.Equal(t, expectedKey,realKey)
 	
