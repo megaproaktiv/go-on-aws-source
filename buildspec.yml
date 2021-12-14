@@ -1,5 +1,23 @@
 version: 0.2
 
+batch:
+  fast-fail: false
+  build-list:
+    - identifier: architecture-serverless
+      env:
+        variables:
+          BUILD_ID: architecture-serverless
+          BUILD_PATH_APP: architectures/serverless/app
+          BUILD_PATH_INFRA: architectures/serverless/infra
+      ignore-failure: true
+    - identifier: architecture-container
+      env:
+        variables:
+          BUILD_ID: architecture-serverless
+          BUILD_PATH_APP: architectures/container/app
+          BUILD_PATH_INFRA: architectures/container/infra/2-table
+      ignore-failure: true
+
 phases:
   install:
     runtime-versions:
@@ -12,20 +30,22 @@ phases:
   build:
     commands:
       - echo Testing app...
-      - cd $CODEBUILD_SRC_DIR/architectures/serverless/app
-      - go test -v  2>&1 | go-junit-report >$CODEBUILD_SRC_DIR/report-app.xml
+      - cd $CODEBUILD_SRC_DIR/$BUILD_PATH_APP
+      - go test -v  2>&1 | go-junit-report >$CODEBUILD_SRC_DIR/report-${BUILD_ID}-app.xml
       - env GOOS=linux GOARCH=amd64 go build -ldflags="-s -w" -o dist/main main/main.go
       - chmod +x dist/main
       - cd dist && zip main.zip main
       - echo Testing infra...
-      - cd $CODEBUILD_SRC_DIR/architectures/serverless/infra
-      - go test -v  2>&1 | go-junit-report >$CODEBUILD_SRC_DIR/report-infra.xml
+      - cd $CODEBUILD_SRC_DIR/$BUILD_PATH_INFRA
+      - go test -v  2>&1 | go-junit-report >$CODEBUILD_SRC_DIR/report-${BUILD_ID}-infra.xml
 
 reports:
   gotest_reports:
     files:
-      - report-app.xml
-      - report-infra.xml
+      - report-architecture-serverless-app.xml
+      - report-architecture-serverless-infra.xml
+      - report-architecture-container-app.xml
+      - report-architecture-container-infra.xml
     base-directory: $CODEBUILD_SRC_DIR
     file-format: JUNITXML
 
