@@ -47,10 +47,10 @@ phases:
 reports:
   gotest_reports:
     files:
-      - report-architecture-serverless-app.xml
-      - report-architecture-serverless-infra.xml
-      - report-architecture-container-app.xml
-      - report-architecture-container-infra.xml
+      - report-architecture_serverless-app.xml
+      - report-architecture_serverless-infra.xml
+      - report-architecture_container-app.xml
+      - report-architecture_container-infra.xml
     base-directory: $CODEBUILD_SRC_DIR
     file-format: JUNITXML
 
