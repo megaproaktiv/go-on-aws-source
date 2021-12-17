@@ -12,7 +12,7 @@ import (
 	"dsl"
 )
 
-func TestExtractObject(t *testing.T){
+func TestAppExtractObject(t *testing.T){
 	var s3event events.S3Event;
 
 	const testfile = "test/put.json"

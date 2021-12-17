@@ -48,7 +48,7 @@ func init() {
 
 // Integration Test
 // export I_TEST="yes"
-func TestInvokeLambdaWithEvent(t *testing.T) {
+func TestAppInvokeLambdaWithEvent(t *testing.T) {
 	if os.Getenv("I_TEST") != "yes" {
 		t.Skip("Skipping testing in non Integration environment")
 	  }

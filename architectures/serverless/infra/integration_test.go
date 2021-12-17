@@ -10,7 +10,7 @@ import (
 	
 )
 
-func TestLambdaExists(t *testing.T) {
+func TestInfraLambdaExists(t *testing.T) {
 	if os.Getenv("I_TEST") != "yes" {
 		t.Skip("Skipping testing in non Integration environment")
 	}

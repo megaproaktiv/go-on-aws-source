@@ -12,7 +12,7 @@ import (
 
 // example tests. To run these tests, uncomment this file along with the
 // example resource in dsl_test.go
-func TestDslStack(t *testing.T) {
+func TestInfraDslStack(t *testing.T) {
 	// GIVEN
 	app := awscdk.NewApp(nil)
 

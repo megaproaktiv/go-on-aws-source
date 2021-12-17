@@ -42,6 +42,7 @@ reports:
       - report-app.xml
       - report-infra.xml
       - report-app-integration.xml
+      - report-infra-integration.xml
     base-directory: $CODEBUILD_SRC_DIR
     file-format: JUNITXML
 
