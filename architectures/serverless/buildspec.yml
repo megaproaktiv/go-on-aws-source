@@ -11,21 +11,33 @@ phases:
       - go get -u github.com/jstemmer/go-junit-report      
   build:
     commands:
-      - echo Testing app...
+      - echo Unit Testing app...
       - cd $CODEBUILD_SRC_DIR/architectures/serverless/app
       - go test -v  2>&1 | go-junit-report >$CODEBUILD_SRC_DIR/report-app.xml
       - env GOOS=linux GOARCH=amd64 go build -ldflags="-s -w" -o dist/main main/main.go
       - chmod +x dist/main
       - cd dist && zip main.zip main
-      - echo Testing infra...
+      - echo Unit Testing infra...
       - cd $CODEBUILD_SRC_DIR/architectures/serverless/infra
       - go test -v  2>&1 | go-junit-report >$CODEBUILD_SRC_DIR/report-infra.xml
+      - export I_TEST=yes
+      - cd $CODEBUILD_SRC_DIR/architectures/serverless/infra
+      - echo Deploying infra
+      - cdk deploy --require-approval never
+      - go test -v  2>&1 | go-junit-report >$CODEBUILD_SRC_DIR/report-infra-integration.xml
+      - cd $CODEBUILD_SRC_DIR/architectures/serverless/app
+      - go test -v  2>&1 | go-junit-report >$CODEBUILD_SRC_DIR/report-app-integration.xml
+      - cd $CODEBUILD_SRC_DIR/architectures/serverless/infra
+      - echo Destroying infra
+      - cdk destroy -f
+      
 
 reports:
   gotest_reports:
     files:
       - report-app.xml
       - report-infra.xml
+      - report-app-integration.xml
     base-directory: $CODEBUILD_SRC_DIR
     file-format: JUNITXML
 
