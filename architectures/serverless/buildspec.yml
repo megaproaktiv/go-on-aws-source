@@ -4,7 +4,7 @@ phases:
   install:
     runtime-versions:
       golang: 1.16
-      nodejs: 12
+      nodejs: 14
     commands:
       - echo Installing CDK..
       - npm i cdk@v2.1.0 -g
