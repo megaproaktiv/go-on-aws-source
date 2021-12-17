@@ -20,12 +20,15 @@ phases:
       - echo Unit Testing infra...
       - cd $CODEBUILD_SRC_DIR/architectures/serverless/infra
       - go test -v  2>&1 | go-junit-report >$CODEBUILD_SRC_DIR/report-infra.xml
-      - export I_TEST=yes
-      - cd $CODEBUILD_SRC_DIR/architectures/serverless/infra
+  post_build:
       - echo Deploying infra
+      - cd $CODEBUILD_SRC_DIR/architectures/serverless/infra
       - cdk deploy --require-approval never
+      - echo Integration Testing infra...
+      - export I_TEST=yes
       - go test -v  2>&1 | go-junit-report >$CODEBUILD_SRC_DIR/report-infra-integration.xml
       - cd $CODEBUILD_SRC_DIR/architectures/serverless/app
+      - echo Integration Testing App...
       - go test -v  2>&1 | go-junit-report >$CODEBUILD_SRC_DIR/report-app-integration.xml
       - cd $CODEBUILD_SRC_DIR/architectures/serverless/infra
       - echo Destroying infra
