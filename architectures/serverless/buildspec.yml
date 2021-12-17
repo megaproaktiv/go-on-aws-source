@@ -27,10 +27,10 @@ phases:
       - cdk deploy --require-approval never
       - echo Integration Testing infra...
       - export I_TEST=yes
-      - go test -v  2>&1 | go-junit-report >$CODEBUILD_SRC_DIR/report-infra-integration.xml
+      - env I_TEST=yes go test -v  2>&1 | go-junit-report >$CODEBUILD_SRC_DIR/report-infra-integration.xml
       - cd $CODEBUILD_SRC_DIR/architectures/serverless/app
       - echo Integration Testing App...
-      - go test -v  2>&1 | go-junit-report >$CODEBUILD_SRC_DIR/report-app-integration.xml
+      - env I_TEST=yes go test -v  2>&1 | go-junit-report >$CODEBUILD_SRC_DIR/report-app-integration.xml
       - cd $CODEBUILD_SRC_DIR/architectures/serverless/infra
       - echo Destroying infra
       - cdk destroy -f
