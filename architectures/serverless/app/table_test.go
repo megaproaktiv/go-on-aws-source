@@ -19,6 +19,7 @@ const testkey = "kjhkjjhollymolly"
 
 
 func TestPutItem(t *testing.T) {
+	t.Log("App - DynamodD Put Item")
 	PutItemMock := func(ctx context.Context, params *dynamodb.PutItemInput)(*dynamodb.PutItemOutput, error) {
 		
 		item := params.Item["itemID"]

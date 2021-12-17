@@ -24,23 +24,25 @@ var ClientD *dynamodb.Client
 var ClientS *s3.Client
 
 func init() {
-	pmstore, err := paddle.NewParameterStore()
-	if err != nil {
-		log.Fatal("Cant connect to Parameter Store")
-	}
-	//Requesting the base path
-	params, err = pmstore.GetAllParametersByPath("/goa-serverless/", true)
-	if err != nil {
-		log.Fatal("Cant get Parameter Store")
-	}
+	if os.Getenv("I_TEST") == "yes" {
+		pmstore, err := paddle.NewParameterStore()
+		if err != nil {
+			log.Fatal("Cant connect to Parameter Store")
+		}
+		//Requesting the base path
+		params, err = pmstore.GetAllParametersByPath("/goa-serverless/", true)
+		if err != nil {
+			log.Fatal("Cant get Parameter Store")
+		}
 
-	cfg, err := config.LoadDefaultConfig(context.TODO())
-	if err != nil {
-		panic("unable to load SDK config, " + err.Error())
+		cfg, err := config.LoadDefaultConfig(context.TODO())
+		if err != nil {
+			panic("unable to load SDK config, " + err.Error())
+		}
+		// Using the Config value, create the DynamoDB client
+		ClientD = dynamodb.NewFromConfig(cfg)
+		ClientS = s3.NewFromConfig(cfg)
 	}
-	// Using the Config value, create the DynamoDB client
-	ClientD = dynamodb.NewFromConfig(cfg)
-	ClientS = s3.NewFromConfig(cfg)
 
 }
 
