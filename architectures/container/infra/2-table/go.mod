@@ -13,4 +13,5 @@ require (
 	github.com/Masterminds/semver/v3 v3.1.1 // indirect
 	github.com/aws/jsii-runtime-go v1.46.0 // indirect
 	github.com/aws/smithy-go v1.9.0 // indirect
+	github.com/jstemmer/go-junit-report v0.9.1 // indirect
 )
