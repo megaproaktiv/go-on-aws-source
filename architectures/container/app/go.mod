@@ -35,7 +35,7 @@ require (
 )
 
 require (
-	github.com/aws/aws-sdk-go-v2 v1.11.0 // indirect
+	github.com/aws/aws-sdk-go-v2 v1.11.2 // indirect
 	github.com/aws/aws-sdk-go-v2/feature/dynamodb/attributevalue v1.4.1
 	github.com/aws/aws-sdk-go-v2/feature/dynamodb/expression v1.3.1
 	github.com/aws/aws-sdk-go-v2/internal/configsources v1.1.0 // indirect
@@ -46,6 +46,6 @@ require (
 	github.com/aws/smithy-go v1.9.0 // indirect
 	github.com/gin-gonic/gin v1.7.4
 	github.com/jmespath/go-jmespath v0.4.0 // indirect
-	github.com/megaproaktiv/awsmock v0.1.1
+	github.com/megaproaktiv/awsmock v0.1.4
 	gotest.tools v2.2.0+incompatible
 )
