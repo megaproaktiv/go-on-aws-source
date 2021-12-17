@@ -6,14 +6,14 @@ batch:
     - identifier: architecture_serverless
       env:
         variables:
-          BUILD_ID: architecture-serverless
+          BUILD_ID: architecture_serverless
           BUILD_BASE_APP: architectures/serverless/app
           BUILD_BASE_INFRA: architectures/serverless/infra
       ignore-failure: true
     - identifier: architecture_container
       env:
         variables:
-          BUILD_ID: architecture-serverless
+          BUILD_ID: architecture_serverless
           BUILD_BASE_APP: architectures/container/app
           BUILD_BASE_INFRA: architectures/container/infra/2-table
       ignore-failure: true

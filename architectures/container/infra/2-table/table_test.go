@@ -21,7 +21,16 @@ func TestTableStack(t *testing.T){
 	// THEN
 	template := assertions.Template_FromStack(stack)
 
-	template.HasResourceProperties(aws.String("AWS::DynamoDB::Table"), map[string]interface{}{
-		"UpdateReplacePolicy": "Delete",
-	})
+
+	template.HasResource(aws.String("AWS::DynamoDB::Table"), 
+		map[string]interface{}{
+			"UpdateReplacePolicy": "Delete",
+		},
+	)
+	// // To Test Fail
+	// template.HasResourceProperties(aws.String("AWS::DynamoDB::Table"), 
+	// 	map[string]interface{}{
+	// 		"UpdateReplacePolicy": "Delete",
+	// 	},
+	// )
 }
