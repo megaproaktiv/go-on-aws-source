@@ -16,7 +16,6 @@ func TestAppExtractObject(t *testing.T){
 	var s3event events.S3Event;
 
 	const testfile = "test/put.json"
-
 	jsonFile, err := os.Open(testfile)
 	if err != nil {
 		fmt.Println(err)
