@@ -1,26 +1,31 @@
 package customresource_test
 
-// import (
-// 	"testing"
+import (
+	"customresource"
+	"testing"
 
-// 	"github.com/aws/aws-cdk-go/awscdk/v2"
-// 	assertions "github.com/aws/aws-cdk-go/awscdk/v2/assertions"
-// 	"github.com/aws/jsii-runtime-go"
-// )
+	"github.com/aws/aws-cdk-go/awscdk/v2"
+	assertions "github.com/aws/aws-cdk-go/awscdk/v2/assertions"
+	"github.com/aws/jsii-runtime-go"
+)
 
-// example tests. To run these tests, uncomment this file along with the
-// example resource in customresource_test.go
-// func TestCustomresourceStack(t *testing.T) {
-// 	// GIVEN
-// 	app := awscdk.NewApp(nil)
 
-// 	// WHEN
-// 	stack := NewCustomresourceStack(app, "MyStack", nil)
+func TestCustomresourceStack(t *testing.T) {
+	// GIVEN
+	app := awscdk.NewApp(nil)
 
-// 	// THEN
-// 	template := assertions.Template_FromStack(stack)
+	// WHEN
+	stack := customresource.NewCustomresourceStack(app, "MyStack", nil)
 
-// 	template.HasResourceProperties(jsii.String("AWS::SQS::Queue"), map[string]interface{}{
-// 		"VisibilityTimeout": 300,
-// 	})
-// }
+	// THEN
+	template := assertions.Template_FromStack(stack)
+
+	template.HasResourceProperties(jsii.String("AWS::CloudFormation::CustomResource"), map[string]interface{}{
+		"ServiceToken":  map[string]interface{}{
+			"Fn::GetAtt": []string{
+				"myHandler0D56A5FA",
+				"Arn",
+			},
+		},
+	})
+}

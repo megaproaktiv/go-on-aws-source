@@ -4,7 +4,6 @@ import (
 	"os"
 	"testing"
 	"gotest.tools/assert"
-
 	"github.com/aws/aws-sdk-go-v2/aws"
 	"github.com/megaproaktiv/cit/citlambda"
 	
