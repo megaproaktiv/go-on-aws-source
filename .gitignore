@@ -20,3 +20,4 @@ infrastructure-as-go/cdk-go/thecdkbook/chapter6/customresource/app/dist
 infrastructure-as-go/cdk-go/thecdkbook/chapter6/customresource/dist
 architectures/serverless/app/dist
 architectures/serverless/infra/dist
+infrastructure-as-go/goformation/dynamodb/dist

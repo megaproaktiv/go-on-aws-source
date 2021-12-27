@@ -13,7 +13,7 @@ batch:
     - identifier: architecture_container
       env:
         variables:
-          BUILD_ID: architecture_serverless
+          BUILD_ID: architecture_container
           BUILD_BASE_APP: architectures/container/app
           BUILD_BASE_INFRA: architectures/container/infra/2-table
       ignore-failure: true
