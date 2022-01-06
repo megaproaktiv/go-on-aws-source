@@ -1,0 +1,4 @@
+instance:
+  name: db
+  image: ami-0a7559a0ef82639f2
+  type: a1.medium
