@@ -21,3 +21,5 @@ infrastructure-as-go/cdk-go/thecdkbook/chapter6/customresource/dist
 architectures/serverless/app/dist
 architectures/serverless/infra/dist
 infrastructure-as-go/goformation/dynamodb/dist
+infrastructure-as-go/cdk-go/thecdkbook/chapter2/stack/.vscode
+infrastructure-as-go/cdk-go/lambda/deploy_bundler/dist
