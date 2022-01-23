@@ -1,18 +1,20 @@
 package escapehatch
 
 import (
+	"encoding/json"
+	"fmt"
+	"os"
+
 	"github.com/aws/aws-cdk-go/awscdk/v2"
 	"github.com/aws/aws-cdk-go/awscdk/v2/awss3"
 	"github.com/aws/aws-sdk-go-v2/aws"
 	"github.com/aws/constructs-go/constructs/v10"
 	"github.com/aws/jsii-runtime-go"
+
+	"github.com/awslabs/goformation/v5/cloudformation/s3"
 )
 
-type EscapeHatchStackProps struct {
-	awscdk.StackProps
-}
-
-func NewEscapeHatchStringStack(scope constructs.Construct, id string, props *EscapeHatchStackProps) awscdk.Stack {
+func NewEscapeHatchFileStack(scope constructs.Construct, id string, props *EscapeHatchStackProps) awscdk.Stack {
 	var sprops awscdk.StackProps
 	if props != nil {
 		sprops = props.StackProps
@@ -24,37 +26,32 @@ func NewEscapeHatchStringStack(scope constructs.Construct, id string, props *Esc
 	helper := awss3.NewBucket(stack, aws.String("helper"), &awss3.BucketProps{
 		RemovalPolicy: awscdk.RemovalPolicy_DESTROY,
 	})
-
 	// example resource
-	bucketStruct := awss3.NewBucket(stack, aws.String("bucky"), &awss3.BucketProps{
+	bucky := awss3.NewBucket(stack, aws.String("bucky"), &awss3.BucketProps{
 		BlockPublicAccess: awss3.BlockPublicAccess_BLOCK_ALL(),
 	})
 
 	var cfnBucketStruct awss3.CfnBucket
 
-	jsii.Get(bucketStruct.Node(), "defaultChild", &cfnBucketStruct)
+	jsii.Get(bucky.Node(), "defaultChild", &cfnBucketStruct)
 	// Example from https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-s3-bucket-analyticsconfiguration.html#aws-properties-s3-bucket-analyticsconfiguration--examples
 
 	// have to use json as struct
 	// if you use json as string, all " will be escaped to \"
 	// with structures it will render ok
-	cfnBucketStruct.AddPropertyOverride(aws.String("AnalyticsConfigurations"),
-		&map[string]interface{}{
-		
-				"Id": "AnalyticsConfigurationId",
-				"StorageClassAnalysis": map[string]interface{}{
-					"DataExport": map[string]interface{}{
-						"Destination": map[string]interface{}{
-							"BucketArn": helper.BucketArn(),
-							"Format": "CSV",
-							"Prefix": "AnalyticsDestinationPrefix",
-						},
-						"OutputSchemaVersion": "V_1",
-					},
-				},
-		
-		},
-	)
+
+	var analyticsConfigurationFromFile []s3.Bucket_AnalyticsConfiguration
+
+	data, err := os.ReadFile("testdata/analyticsconfig.json")
+	if err != nil {
+		fmt.Println("Cant read json data: ", err)
+	}
+	json.Unmarshal(data, &analyticsConfigurationFromFile)
+	if err != nil {
+		fmt.Println("JSON unmarshall error data: ", err)
+	}
+	analyticsConfigurationFromFile[0].StorageClassAnalysis.DataExport.Destination.BucketArn = *helper.BucketArn()
+	cfnBucketStruct.AddPropertyOverride(aws.String("AnalyticsConfigurations"), analyticsConfigurationFromFile)
 
 	return stack
 }
