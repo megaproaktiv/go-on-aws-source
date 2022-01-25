@@ -34,11 +34,6 @@ func NewEscapeHatchFileStack(scope constructs.Construct, id string, props *Escap
 	var cfnBucketStruct awss3.CfnBucket
 
 	jsii.Get(bucky.Node(), "defaultChild", &cfnBucketStruct)
-	// Example from https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-s3-bucket-analyticsconfiguration.html#aws-properties-s3-bucket-analyticsconfiguration--examples
-
-	// have to use json as struct
-	// if you use json as string, all " will be escaped to \"
-	// with structures it will render ok
 
 	var analyticsConfigurationFromFile []s3.Bucket_AnalyticsConfiguration
 

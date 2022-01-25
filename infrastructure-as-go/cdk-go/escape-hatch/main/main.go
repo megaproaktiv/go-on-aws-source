@@ -7,7 +7,19 @@ import (
 
 func main() {
 	app := awscdk.NewApp(nil)
-	escapehatch.NewEscapeHatchStack(app, "EscapeHatchStack", &escapehatch.EscapeHatchStackProps{
+	escapehatch.NewEscapeHatchStringStack(app, "string", &escapehatch.EscapeHatchStackProps{
+		awscdk.StackProps{
+			Env: env(),
+		},
+	},)
+
+	escapehatch.NewEscapeHatchFileStack(app, "file", &escapehatch.EscapeHatchStackProps{
+		awscdk.StackProps{
+			Env: env(),
+		},
+	},)
+
+	escapehatch.NewEscapeHatchStringStack(app, "struct", &escapehatch.EscapeHatchStackProps{
 		awscdk.StackProps{
 			Env: env(),
 		},

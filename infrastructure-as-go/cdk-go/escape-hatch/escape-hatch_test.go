@@ -9,12 +9,12 @@ import (
 	"github.com/aws/jsii-runtime-go"
 )
 
-func TestEscapeHatchStack(t *testing.T) {
+func TestEscapeHatchStringStack(t *testing.T) {
 	// GIVEN
 	app := awscdk.NewApp(nil)
 
 	// WHEN
-	stack := escapehatch.NewEscapeHatchStack(app, "MyStack", nil)
+	stack := escapehatch.NewEscapeHatchStringStack(app, "MyStack", nil)
 
 	// THEN
 	template := assertions.Template_FromStack(stack)

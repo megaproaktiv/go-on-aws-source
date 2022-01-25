@@ -11,7 +11,9 @@ import (
 type EscapeHatchStackProps struct {
 	awscdk.StackProps
 }
-
+// Show 
+// - not working direct string assigment
+// - String as interface{}
 func NewEscapeHatchStringStack(scope constructs.Construct, id string, props *EscapeHatchStackProps) awscdk.Stack {
 	var sprops awscdk.StackProps
 	if props != nil {
@@ -19,13 +21,10 @@ func NewEscapeHatchStringStack(scope constructs.Construct, id string, props *Esc
 	}
 	stack := awscdk.NewStack(scope, &id, &sprops)
 
-	// The code that defines your stack goes here
-
 	helper := awss3.NewBucket(stack, aws.String("helper"), &awss3.BucketProps{
 		RemovalPolicy: awscdk.RemovalPolicy_DESTROY,
 	})
 
-	// example resource
 	bucketStruct := awss3.NewBucket(stack, aws.String("bucky"), &awss3.BucketProps{
 		BlockPublicAccess: awss3.BlockPublicAccess_BLOCK_ALL(),
 	})
@@ -33,11 +32,38 @@ func NewEscapeHatchStringStack(scope constructs.Construct, id string, props *Esc
 	var cfnBucketStruct awss3.CfnBucket
 
 	jsii.Get(bucketStruct.Node(), "defaultChild", &cfnBucketStruct)
-	// Example from https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-s3-bucket-analyticsconfiguration.html#aws-properties-s3-bucket-analyticsconfiguration--examples
 
-	// have to use json as struct
-	// if you use json as string, all " will be escaped to \"
-	// with structures it will render ok
+	// Direct string assigment does not work
+	cfnBucketStruct.AddPropertyOverride(aws.String("AnalyticsConfigurationsEscaped"), `
+	[
+    {
+    "Id": "AnalyticsConfigurationId",
+    "StorageClassAnalysis": {
+        "DataExport": {
+            "Destination": {
+                "BucketArn": {
+                    "Fn::GetAtt": [
+                        "Helper",
+                        "Arn"
+                    ]
+                },
+                "Format": "CSV",
+                "Prefix": "AnalyticsDestinationPrefix"
+            },
+            "OutputSchemaVersion": "V_1"
+        }
+    },
+    "Prefix": "AnalyticsConfigurationPrefix",
+    "TagFilters": [
+        {
+            "Key": "AnalyticsTagKey",
+            "Value": "AnalyticsTagValue"
+        }
+    ]
+    }
+]
+`)
+
 	cfnBucketStruct.AddPropertyOverride(aws.String("AnalyticsConfigurations"),
 		&map[string]interface{}{
 		
