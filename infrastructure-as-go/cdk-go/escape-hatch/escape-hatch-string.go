@@ -64,23 +64,25 @@ func NewEscapeHatchStringStack(scope constructs.Construct, id string, props *Esc
 ]
 `)
 
-	cfnBucketStruct.AddPropertyOverride(aws.String("AnalyticsConfigurations"),
-		&map[string]interface{}{
-		
-				"Id": "AnalyticsConfigurationId",
-				"StorageClassAnalysis": map[string]interface{}{
-					"DataExport": map[string]interface{}{
-						"Destination": map[string]interface{}{
-							"BucketArn": helper.BucketArn(),
-							"Format": "CSV",
-							"Prefix": "AnalyticsDestinationPrefix",
-						},
-						"OutputSchemaVersion": "V_1",
+// This will generate the wrong Cfn Code.
+// The Analytics Configuration has to be an array
+cfnBucketStruct.AddPropertyOverride(aws.String("AnalyticsConfigurations"),
+	&map[string]interface{}{
+	
+			"Id": "AnalyticsConfigurationId",
+			"StorageClassAnalysis": map[string]interface{}{
+				"DataExport": map[string]interface{}{
+					"Destination": map[string]interface{}{
+						"BucketArn": helper.BucketArn(),
+						"Format": "CSV",
+						"Prefix": "AnalyticsDestinationPrefix",
 					},
+					"OutputSchemaVersion": "V_1",
 				},
-		
-		},
-	)
+			},
+	
+	},
+)
 
 	return stack
 }
