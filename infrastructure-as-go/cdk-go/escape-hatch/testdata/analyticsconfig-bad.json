@@ -1,0 +1,28 @@
+[
+  {
+    "Id": "AnalyticsConfigurationIdBad",
+    "ShiftQualityLeftid" : "low",
+    "storageClassAnalysis": {
+      "DataExport": {
+        "Destination": {
+          "BucketArn": {
+            "Fn::GetAtt": [
+              "buckyE21EA0FF",
+              "Arn"
+            ]
+          }
+        },
+        "Format": "CSV",
+        "Prefix": "AnalyticsDestinationPrefix"
+      },
+      "OutputSchemaVersion": "V_1",
+      "Prefix": "AnalyticsConfigurationPrefix",
+      "TagFilters": [
+        {
+          "Key": "AnalyticsTagKey",
+          "Value": "AnalyticsTagValue"
+        }
+      ]
+    }
+  }
+]

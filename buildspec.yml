@@ -1,0 +1,57 @@
+version: 0.2
+
+batch:
+  fast-fail: false
+  build-list:
+    - identifier: architecture_serverless
+      env:
+        variables:
+          BUILD_ID: architecture_serverless
+          BUILD_BASE_APP: architectures/serverless/app
+          BUILD_BASE_INFRA: architectures/serverless/infra
+      ignore-failure: true
+    - identifier: architecture_container
+      env:
+        variables:
+          BUILD_ID: architecture_container
+          BUILD_BASE_APP: architectures/container/app
+          BUILD_BASE_INFRA: architectures/container/infra/2-table
+      ignore-failure: true
+
+phases:
+  install:
+    runtime-versions:
+      golang: 1.16
+      nodejs: 14
+    commands:
+      - echo Installing CDK..
+      - npm i cdk@v2.2.0 -g
+      - go get -u github.com/jstemmer/go-junit-report      
+  build:
+    commands:
+      - echo Batch ID ${BUILD_ID}
+      - echo Testing app...
+      - cd ${CODEBUILD_SRC_DIR}
+      - cd ${BUILD_BASE_APP}
+      - pwd
+      - go test -v  2>&1 | go-junit-report >${CODEBUILD_SRC_DIR}/report-${BUILD_ID}-app.xml
+      - env GOOS=linux GOARCH=amd64 go build -ldflags="-s -w" -o dist/main main/main.go
+      - chmod +x dist/main
+      - cd dist && zip main.zip main
+      - echo Testing infra...
+      - cd ${CODEBUILD_SRC_DIR}
+      - cd ${BUILD_BASE_INFRA}
+      - pwd
+      - go test -v  2>&1 | go-junit-report >${CODEBUILD_SRC_DIR}/report-${BUILD_ID}-infra.xml
+
+reports:
+  gotest_reports:
+    files:
+      - report-architecture_serverless-app.xml
+      - report-architecture_serverless-infra.xml
+      - report-architecture_container-app.xml
+      - report-architecture_container-infra.xml
+    base-directory: $CODEBUILD_SRC_DIR
+    file-format: JUNITXML
+
+ 

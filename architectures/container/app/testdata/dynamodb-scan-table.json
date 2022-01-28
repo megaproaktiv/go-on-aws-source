@@ -1,0 +1,31 @@
+{
+    "Items": [
+        {
+            "itemID": {
+                "S": "object-key-demo1"
+            },
+            "time": {
+                "S": "2021-11-17 09:02:45.102323985 +0000 UTC m=+0.048753620"
+            }
+        },
+        {
+            "itemID": {
+                "S": "object-key-demo2"
+            },
+            "time": {
+                "S": "2021-11-17 09:03:45.102323985 +0000 UTC m=+0.048753620"
+            }
+        },
+        {
+            "itemID": {
+                "S": "object-key-demo3"
+            },
+            "time": {
+                "S": "2021-11-17 09:04:45.102323985 +0000 UTC m=+0.048753620"
+            }
+        }
+    ],
+    "Count": 2,
+    "ScannedCount": 2,
+    "ConsumedCapacity": null
+}

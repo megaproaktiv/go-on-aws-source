@@ -1,0 +1,27 @@
+[
+    {
+    "Id": "AnalyticsConfigurationId",
+    "StorageClassAnalysis": {
+        "DataExport": {
+            "Destination": {
+                "BucketArn": {
+                    "Fn::GetAtt": [
+                        "Helper",
+                        "Arn"
+                    ]
+                },
+                "Format": "CSV",
+                "Prefix": "AnalyticsDestinationPrefix"
+            },
+            "OutputSchemaVersion": "V_1"
+        }
+    },
+    "Prefix": "AnalyticsConfigurationPrefix",
+    "TagFilters": [
+        {
+            "Key": "AnalyticsTagKey",
+            "Value": "AnalyticsTagValue"
+        }
+    ]
+    }
+]

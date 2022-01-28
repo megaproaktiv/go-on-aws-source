@@ -1,0 +1,90 @@
+# https://taskfile.dev
+
+## Build Management only for go
+
+version: '3'
+
+env:
+  AWS_DEFAULT_REGION: eu-central-1
+
+tasks:
+  default:
+    deps: [build]
+
+  build:
+    desc: build go
+    cmds:
+      - env GOOS=linux GOARCH=amd64 go build -ldflags="-s -w" -o dist/main main/main.go
+      - chmod +x dist/main
+      - cd dist && zip main.zip main
+    sources:
+      - ./*.go
+      - main/*.go
+    generates:
+      - dist/main.zip
+    silent: true
+
+  fastdeploy:
+    desc: Deploy only lambda
+    deps: [build]
+    vars:
+      FN:      
+        sh: aws ssm get-parameter --name "/goa-serverless/handler" --query "Parameter.Value" --output text
+    cmds:
+      - aws lambda update-function-code --function-name  {{.FN}} --zip-file fileb://dist/main.zip
+
+  showtable:
+    desc: scan Table
+    env: 
+      AWS_PAGER: ""
+    vars:
+      TABLE:      
+        sh: aws ssm get-parameter --name "/goa-serverless/table" --query "Parameter.Value" --output text
+    cmds:
+      - aws dynamodb scan --table-name {{.TABLE}} 
+
+  itest:
+    desc: integration test call lambda
+    deps: [build]
+    env: 
+      AWS_PAGER: ""
+    vars:
+      FN:      
+        sh: aws ssm get-parameter --name "/goa-serverless/handler" --query "Parameter.Value" --output text
+      TABLE:      
+        sh: aws ssm get-parameter --name "/goa-serverless/table" --query "Parameter.Value" --output text
+    cmds:
+      - aws dynamodb delete-item --table-name {{.TABLE}} --key file://testdata/key.json
+      - aws dynamodb get-item --table-name {{.TABLE}} --key file://testdata/key.json
+      - time aws lambda invoke --function-name {{.FN}} --payload fileb://./test/put.json  test/result.json
+      - date
+      - sleep 5
+      - aws dynamodb get-item --table-name {{.TABLE}} --key file://testdata/key.json
+
+  etest:
+    desc: ende to end test put file in s3
+    deps: [build]
+    env: 
+      AWS_PAGER: ""
+    vars:
+      FN:      
+        sh: aws ssm get-parameter --name "/goa-serverless/handler" --query "Parameter.Value" --output text
+      TABLE:      
+        sh: aws ssm get-parameter --name "/goa-serverless/table" --query "Parameter.Value" --output text
+      BUCKET:      
+        sh: aws ssm get-parameter --name "/goa-serverless/bucket" --query "Parameter.Value" --output text
+      KEY: my2etestkey.txt  
+    cmds:
+      - aws dynamodb delete-item --table-name {{.TABLE}} --key file://testdata/key.json
+      - aws dynamodb get-item --table-name {{.TABLE}} --key file://testdata/key.json
+      - aws s3 cp testdata/dummy.txt s3://{{.BUCKET}}/{{.KEY}}
+      - date
+      - sleep 5
+      - aws dynamodb get-item --table-name {{.TABLE}} --key file://testdata/key.json
+
+  test:
+    desc: call go test
+    deps: [build]
+    cmds:
+      - go test -v
+

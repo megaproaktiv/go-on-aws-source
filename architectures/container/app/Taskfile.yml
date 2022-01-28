@@ -1,0 +1,68 @@
+# https://taskfile.dev
+
+version: '3'
+
+vars:
+  LOCAL_DIST: ./dist/
+  DIST: ../dist/
+
+tasks:
+
+  build:
+    desc: build go files
+    cmds:
+      - go build -o {{.LOCAL_DIST}}dosshow main/main.go
+    silent: true
+
+  run:
+    desc: run server
+    cmds:
+      - go run main/main.go
+
+  build-linux:
+    desc: Build Linux Image
+    cmds:
+      - cmd: mkdir dist 
+        ignore_error: true 
+      - CGO_ENABLED=0  GOOS=linux GOARCH=amd64 go build -o {{.LOCAL_DIST}}dosshow -ldflags '-w' main/main.go
+      - chmod +x {{.LOCAL_DIST}}dosshow
+
+  docker-build:
+    desc: Build docker image
+    deps: [build-linux]
+    cmds:
+      - docker build -t dosshow .
+
+  docker-run:
+    desc: run docker local
+    cmds:
+      - docker run -d -p 8081:8080  -e AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID -e AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY dosshow
+    silent: true
+
+  dist:
+    desc: prepare distribution
+    deps: [build-linux]
+    cmds:
+      - cmd: mkdir LOCAL_DIST {{.LOCAL_DIST}}templates {{.LOCAL_DIST}}assets {{.LOCAL_DIST}}assets/css {{.LOCAL_DIST}}assets/js {{.LOCAL_DIST}}dist
+        ignore_error: true 
+      - cmd: rm {{.LOCAL_DIST}}templates/*
+        ignore_error: true 
+      - cmd: rm {{.LOCAL_DIST}}assets/css/*
+        ignore_error: true 
+      - cmd: rm {{.LOCAL_DIST}}assets/js/*
+        ignore_error: true 
+      - cp templates/* {{.LOCAL_DIST}}templates  
+      - cp assets/css/* {{.LOCAL_DIST}}assets/css
+      - cp assets/js/* {{.LOCAL_DIST}}assets/js
+      - cp Dockerfile {{.LOCAL_DIST}} 
+      - cp {{.LOCAL_DIST}}dosshow {{.LOCAL_DIST}}dist/dosshow
+
+  deploy:
+    desc: Copy locally
+    deps: [dist]
+    cmds:
+      - cmd: rm -r {{.DIST}} 
+        ignore_error: true 
+      - cmd: mkdir {{.DIST}} 
+        ignore_error: true 
+      - cp -pr {{.LOCAL_DIST}}  {{.DIST}}
