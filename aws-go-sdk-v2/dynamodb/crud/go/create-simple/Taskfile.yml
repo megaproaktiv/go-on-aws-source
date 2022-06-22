@@ -1,0 +1,16 @@
+# https://taskfile.dev
+
+version: '3'
+
+vars:
+  GREETING: Hello, World!
+
+tasks:
+  run:
+    desc: Run create table item
+    cmds:
+      - go run main/main.go
+  test:
+    desc: Unit Test
+    cmds:
+      - go test -v
