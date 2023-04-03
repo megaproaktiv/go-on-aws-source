@@ -5,6 +5,12 @@ version: '3'
 vars:
   GREETING: Hello, World!
 
+env:
+  DOCKER_BUILDKIT: 0
+  COMPOSE_DOCKER_CLI_BUILD: 0
+  DOCKER_DEFAULT_PLATFORM: "linux/amd64"
+  DOCKER_SCAN_SUGGEST: false
+
 tasks:
   test:
     desc: 1 - Test

@@ -3,7 +3,10 @@ package main
 import "fmt"
 
 func main() {
-	heroes := []string{"peter", "gwen", "bruce"}
+	heroes := map[string]bool{
+		"peter": true,
+		"gwen":  false,
+		"bruce": true}
 
 	for i := range heroes {
 		fmt.Println(i)

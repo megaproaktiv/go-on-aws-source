@@ -26,3 +26,5 @@ architectures/serverless/infra/dist
 infrastructure-as-go/goformation/dynamodb/dist
 infrastructure-as-go/cdk-go/thecdkbook/chapter2/stack/.vscode
 infrastructure-as-go/cdk-go/lambda/deploy_bundler/dist
+.vscode
+aws-go-sdk-v2/dynamodb/crud/node/node_modules
