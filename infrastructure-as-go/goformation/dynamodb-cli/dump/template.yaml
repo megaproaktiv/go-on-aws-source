@@ -1,0 +1,19 @@
+AWSTemplateFormatVersion: 2010-09-09
+Resources:
+  simpletable:
+    Metadata:
+      Generator: goformation
+    Properties:
+      AttributeDefinitions:
+      - AttributeName: Username
+        AttributeType: S
+      BillingMode: PAY_PER_REQUEST
+      KeySchema:
+      - AttributeName: Username
+        KeyType: HASH
+      TableClass: STANDARD_INFREQUENT_ACCESS
+      TableName: UserTable
+      Tags:
+      - Key: Name
+        Value: Username
+    Type: AWS::DynamoDB::Table

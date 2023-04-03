@@ -1,0 +1,61 @@
+{
+    "StackEvents": [
+        {
+            "StackId": "arn:aws:cloudformation:eu-central-1:012345678912:stack/testcfn/9f675870-201e-11eb-a9a9-06cc4e94edaa",
+            "EventId": "MyTopic-CREATE_IN_PROGRESS-2020-11-06T10:55:49.190Z",
+            "StackName": "testcfn",
+            "LogicalResourceId": "MyTopic",
+            "PhysicalResourceId": "arn:aws:sns:eu-central-1:795048271754:my-topic-1604660145",
+            "ResourceType": "AWS::SNS::Topic",
+            "Timestamp": "2020-11-06T10:55:49.190000+00:00",
+            "ResourceStatus": "CREATE_IN_PROGRESS",
+            "ResourceStatusReason": "Resource creation Initiated",
+            "ResourceProperties": "{\"TopicName\":\"my-topic-1604660145\"}"
+        },
+        {
+            "StackId": "arn:aws:cloudformation:eu-central-1:012345678912:stack/testcfn/9f675870-201e-11eb-a9a9-06cc4e94edaa",
+            "EventId": "NotMyTopic-CREATE_IN_PROGRESS-2020-11-06T10:55:49.187Z",
+            "StackName": "testcfn",
+            "LogicalResourceId": "NotMyTopic",
+            "PhysicalResourceId": "arn:aws:sns:eu-central-1:795048271754:my-topic2-1604660145",
+            "ResourceType": "AWS::SNS::Topic",
+            "Timestamp": "2020-11-06T10:55:49.187000+00:00",
+            "ResourceStatus": "CREATE_IN_PROGRESS",
+            "ResourceStatusReason": "Resource creation Initiated",
+            "ResourceProperties": "{\"TopicName\":\"my-topic2-1604660145\"}"
+        },
+        {
+            "StackId": "arn:aws:cloudformation:eu-central-1:012345678912:stack/testcfn/9f675870-201e-11eb-a9a9-06cc4e94edaa",
+            "EventId": "NotMyTopic-CREATE_IN_PROGRESS-2020-11-06T10:55:48.729Z",
+            "StackName": "testcfn",
+            "LogicalResourceId": "NotMyTopic",
+            "PhysicalResourceId": "",
+            "ResourceType": "AWS::SNS::Topic",
+            "Timestamp": "2020-11-06T10:55:48.729000+00:00",
+            "ResourceStatus": "CREATE_IN_PROGRESS",
+            "ResourceProperties": "{\"TopicName\":\"my-topic2-1604660145\"}"
+        },
+        {
+            "StackId": "arn:aws:cloudformation:eu-central-1:012345678912:stack/testcfn/9f675870-201e-11eb-a9a9-06cc4e94edaa",
+            "EventId": "MyTopic-CREATE_IN_PROGRESS-2020-11-06T10:55:48.706Z",
+            "StackName": "testcfn",
+            "LogicalResourceId": "MyTopic",
+            "PhysicalResourceId": "",
+            "ResourceType": "AWS::SNS::Topic",
+            "Timestamp": "2020-11-06T10:55:48.706000+00:00",
+            "ResourceStatus": "CREATE_IN_PROGRESS",
+            "ResourceProperties": "{\"TopicName\":\"my-topic-1604660145\"}"
+        },
+        {
+            "StackId": "arn:aws:cloudformation:eu-central-1:012345678912:stack/testcfn/9f675870-201e-11eb-a9a9-06cc4e94edaa",
+            "EventId": "9f690620-201e-11eb-a9a9-06cc4e94edaa",
+            "StackName": "testcfn",
+            "LogicalResourceId": "testcfn",
+            "PhysicalResourceId": "arn:aws:cloudformation:eu-central-1:795048271754:stack/testcfn/9f675870-201e-11eb-a9a9-06cc4e94edaa",
+            "ResourceType": "AWS::CloudFormation::Stack",
+            "Timestamp": "2020-11-06T10:55:46.074000+00:00",
+            "ResourceStatus": "CREATE_IN_PROGRESS",
+            "ResourceStatusReason": "User Initiated"
+        }
+    ]
+}

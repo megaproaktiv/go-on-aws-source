@@ -1,0 +1,30 @@
+2021-12-26T17:36:27.742+0100	INFO	main/main.go:24	Starting
+2021-12-26T17:37:17.622+0100	INFO	main/main.go:24	Starting
+2021-12-26T17:37:20.744+0100	INFO	main/main.go:24	Starting
+2021-12-26T17:38:14.675+0100	INFO	main/main.go:24	Starting
+2021-12-26T17:38:29.526+0100	INFO	main/main.go:24	Starting
+2021-12-26T17:39:15.469+0100	INFO	main/main.go:24	Starting
+2021-12-26T17:39:15.471+0100	INFO	dynamodb-cli/deploy.go:57	CreateStack: demotemplate
+2021-12-26T17:39:15.720+0100	ERROR	dynamodb-cli/deploy.go:60	CreateStack operation error CloudFormation: CreateStack, https response error StatusCode: 403, RequestID: 135a30d3-b0b3-42e4-a9da-5dfb24f37c2d, api error InvalidClientTokenId: The security token included in the request is invalid.
+2021-12-26T17:39:29.511+0100	INFO	main/main.go:24	Starting
+2021-12-26T17:39:29.512+0100	INFO	dynamodb-cli/deploy.go:57	CreateStack: demotemplate
+2021-12-26T17:39:29.874+0100	DEBUG	dynamodb-cli/deploy.go:63	Response &{0x140004aa710 {map[{}:-874570000 {}:0x140004d6000 {}:332151d3-d667-4478-81f3-7a0898d00138 {}:{13864969790027784464 366406042 0x102ef97c0} {}:{0 63776133569 <nil>} {}:{[{<nil> false false {map[{}:-874570000 {}:0x140004d6000 {}:332151d3-d667-4478-81f3-7a0898d00138 {}:{13864969790027784464 366406042 0x102ef97c0} {}:{0 63776133569 <nil>}]}}]}]} {}}
+2021-12-26T17:42:22.781+0100	INFO	main/main.go:24	Starting
+2021-12-26T17:42:28.709+0100	INFO	main/main.go:24	Starting
+2021-12-26T17:42:34.834+0100	INFO	main/main.go:24	Starting
+2021-12-26T17:43:36.443+0100	INFO	main/main.go:24	Starting
+2021-12-26T17:43:50.018+0100	INFO	main/main.go:24	Starting
+2021-12-26T17:48:02.858+0100	INFO	main/main.go:25	Starting
+2021-12-26T17:48:02.860+0100	INFO	dynamodb-cli/deploy.go:57	CreateStack: demotemplate
+2021-12-26T17:48:03.177+0100	ERROR	dynamodb-cli/deploy.go:60	CreateStack operation error CloudFormation: CreateStack, https response error StatusCode: 400, RequestID: 14749bf2-77b1-4a29-b07e-3d9ea2a7a8f3, AlreadyExistsException: Stack [demotemplate] already exists
+2021-12-26T17:48:10.382+0100	INFO	main/main.go:25	Starting
+2021-12-26T17:48:10.382+0100	ERROR	main/main.go:47	error => clapper.ErrorUnknownCommand{Name:"show"}
+
+2021-12-26T17:48:14.230+0100	INFO	main/main.go:25	Starting
+2021-12-26T17:48:20.396+0100	INFO	main/main.go:25	Starting
+2021-12-26T19:58:27.779+0100	INFO	main/main.go:23	Starting
+2021-12-26T19:58:27.781+0100	INFO	dynamodb-cli/deploy.go:57	CreateStack: demotemplate
+2021-12-26T19:58:28.228+0100	DEBUG	dynamodb-cli/deploy.go:63	Response &{0x14000206350 {map[{}:-1227694000 {}:0x1400012e0a0 {}:7bebbbe4-482f-4741-996b-a2d728a0c10d {}:{13864978743313978800 455257335 0x1012157c0} {}:{0 63776141907 <nil>} {}:{[{<nil> false false {map[{}:-1227694000 {}:0x1400012e0a0 {}:7bebbbe4-482f-4741-996b-a2d728a0c10d {}:{13864978743313978800 455257335 0x1012157c0} {}:{0 63776141907 <nil>}]}}]}]} {}}
+2021-12-26T20:00:16.070+0100	INFO	main/main.go:23	Starting
+2021-12-26T20:00:21.250+0100	INFO	main/main.go:23	Starting
+2021-12-26T20:00:28.785+0100	INFO	main/main.go:23	Starting
