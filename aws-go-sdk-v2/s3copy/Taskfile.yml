@@ -1,0 +1,26 @@
+# https://taskfile.dev
+
+version: '3'
+
+vars:
+  BUCKET: dateneimer
+  PREFIX: upload/
+  FILE: testdata/test.txt
+
+tasks:
+  run:
+    desc: Run opload
+    deps:
+      - build
+    cmds:
+      - date >{{.FILE}}
+      - ls -l {{.FILE}}
+      - aws s3 rm s3://{{.BUCKET}}/{{.PREFIX}}/test.txt
+      - aws s3 ls {{.BUCKET}}/{{.PREFIX}}
+      - ./dist/s3cp --file {{.FILE}} --bucket {{.BUCKET}} --prefix {{.PREFIX}}
+      - aws s3 ls {{.BUCKET}}/{{.PREFIX}}
+    silent: false
+
+  build:
+    cmds:
+      - go build -o dist/s3cp main/main.go
