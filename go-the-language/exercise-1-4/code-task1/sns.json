@@ -1,0 +1,11 @@
+{
+  "Records": [
+    {
+      "EventVersion": "1.0",
+      "EventSource": "aws:sns",
+      "Sns": {
+        "Message": "Hello from SNS!"
+      }
+    }
+  ]
+}

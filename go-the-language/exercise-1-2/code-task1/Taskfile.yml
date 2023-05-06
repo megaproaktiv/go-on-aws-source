@@ -1,0 +1,17 @@
+# https://taskfile.dev
+
+version: '3'
+
+vars:
+  GREETING: Hello, World!
+
+tasks:
+  run:
+    description: Run main.go
+    cmds:
+      - go run main.go
+  build:
+    description: build main.go
+    cmds:
+      - mkdir -p dist
+      - go build -o dist/printer main.go

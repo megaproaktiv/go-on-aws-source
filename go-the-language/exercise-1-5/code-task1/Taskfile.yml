@@ -1,0 +1,15 @@
+# https://taskfile.dev
+
+version: '3'
+
+vars:
+  GREETING: Hello, World!
+
+tasks:
+  run:
+    cmds:
+      - go run main/main.go
+  build:
+    cmds:
+      - go build -o simple main/main.go
+    silent: true
