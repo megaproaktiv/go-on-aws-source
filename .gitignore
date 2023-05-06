@@ -28,3 +28,4 @@ infrastructure-as-go/cdk-go/thecdkbook/chapter2/stack/.vscode
 infrastructure-as-go/cdk-go/lambda/deploy_bundler/dist
 .vscode
 aws-go-sdk-v2/dynamodb/crud/node/node_modules
+aws-go-sdk-v2/s3copy/dist
