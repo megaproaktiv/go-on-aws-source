@@ -1,0 +1,29 @@
+{
+    "StackResources": [
+        {
+            "StackName": "somecheapressources",
+            "StackId": "arn:aws:cloudformation:eu-central-1:139008737997:stack/somecheapressources/2605f730-ec99-11ed-863e-06eda349a528",
+            "LogicalResourceId": "MyLambdaRole",
+            "PhysicalResourceId": "somecheapressources-MyLambdaRole-1IEE4PBQE7G8Z",
+            "ResourceType": "AWS::IAM::Role",
+            "Timestamp": "2023-05-07T05:37:17.057000+00:00",
+            "ResourceStatus": "CREATE_IN_PROGRESS",
+            "ResourceStatusReason": "Resource creation Initiated",
+            "DriftInformation": {
+                "StackResourceDriftStatus": "NOT_CHECKED"
+            }
+        },
+        {
+            "StackName": "somecheapressources",
+            "StackId": "arn:aws:cloudformation:eu-central-1:139008737997:stack/somecheapressources/2605f730-ec99-11ed-863e-06eda349a528",
+            "LogicalResourceId": "MySNSTopic",
+            "PhysicalResourceId": "arn:aws:sns:eu-central-1:139008737997:somecheapressources-MySNSTopic-cuCtIcG9uNIK",
+            "ResourceType": "AWS::SNS::Topic",
+            "Timestamp": "2023-05-07T05:37:18.290000+00:00",
+            "ResourceStatus": "CREATE_COMPLETE",
+            "DriftInformation": {
+                "StackResourceDriftStatus": "NOT_CHECKED"
+            }
+        }
+    ]
+}

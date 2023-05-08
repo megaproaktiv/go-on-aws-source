@@ -1,0 +1,36 @@
+# https://taskfile.dev
+
+version: '3'
+
+vars:
+  STACK: somecheapressources
+
+tasks:
+  setup:
+    desc: Create stack
+    cmds:
+      - aws cloudformation create-stack 
+        --stack-name {{.STACK}} 
+        --template-body file://testdata/template.yml 
+        --capabilities CAPABILITY_IAM
+    silent: false
+
+  teardown:
+    desc: Create stack
+    cmds:
+      - aws cloudformation delete-stack 
+        --stack-name {{.STACK}} 
+
+    silent: false
+
+  test:
+    desc: go test
+    cmds:
+      - go test .
+
+  describe:
+    desc: Describe stack-resources  
+    cmds:
+      - aws cloudformation describe-stack-resources
+        --stack-name {{.STACK}} 
+      
