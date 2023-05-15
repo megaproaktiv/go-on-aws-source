@@ -11,7 +11,10 @@ import (
 // Load file to s3
 func Upload(client *s3.Client, filename *string,bucket *string) error {
 	
+	//begin upload
 	content, err := os.ReadFile(*filename)
+
+	//end upload
 	//handle error
 	if err != nil {
 		return err
@@ -19,6 +22,7 @@ func Upload(client *s3.Client, filename *string,bucket *string) error {
 
 	key := filename
 	// Upload  file to s3 
+	//begin upload
 	_, err = client.PutObject(
 		context.Background(),
 		&s3.PutObjectInput{
@@ -27,6 +31,7 @@ func Upload(client *s3.Client, filename *string,bucket *string) error {
 			Body:   bytes.NewReader(content),
 		}, 
 	)
+	//end upload
 	//handle error
 	if err != nil {
 		return err

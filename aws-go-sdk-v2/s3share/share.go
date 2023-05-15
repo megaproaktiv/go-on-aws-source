@@ -17,6 +17,7 @@ func Share(client *s3.Client, key *string, bucket *string) (string, error) {
 
 	// generate the presigned URL
 	// s3 presign client
+	//begin presign
 	s3PresignClient := s3.NewPresignClient(client)
 	req, err := s3PresignClient.PresignGetObject(
 		context.TODO(),
@@ -27,7 +28,7 @@ func Share(client *s3.Client, key *string, bucket *string) (string, error) {
 		func(opts *s3.PresignOptions) {
 			opts.Expires = time.Duration(lifetimeSecs * int64(time.Second))
 		})
-
+	//end presign
 	if err != nil {
 		log.Printf("Couldn't get a presigned request to get %v:%v. Here's why: %v\n",
 			*bucket, *key, err)
