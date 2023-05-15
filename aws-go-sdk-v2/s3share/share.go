@@ -9,7 +9,7 @@ import (
 )
 
 // Share existing S3 object with presigned URL
-func Share(client *s3.Client, bucket *string, key *string) (string, error) {
+func Share(client *s3.Client, key *string, bucket *string) (string, error) {
 
 	var url string
 	// Set the expiration time for the presigned URL

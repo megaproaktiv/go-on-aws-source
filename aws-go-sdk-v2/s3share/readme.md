@@ -1,3 +1,15 @@
+
+## Usage
+
+Replace `dateneimer` with the name of your bucket.
+
+```bash
+go run main/main.go --file testdata/text.txt --bucket dateneimer
+```
+
+
+## CodeWhisperer
+
 For best results, follow these practices.
 
 Give CodeWhisperer something to work with. The more code your file contains, the more context CodeWhisperer has for generating recommendations.
