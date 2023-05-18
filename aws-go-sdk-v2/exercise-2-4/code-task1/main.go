@@ -9,7 +9,9 @@ import (
 
 	"github.com/aws/aws-sdk-go-v2/aws"
 	"github.com/aws/aws-sdk-go-v2/config"
+	//begin manager
 	"github.com/aws/aws-sdk-go-v2/feature/s3/manager"
+	//end manager
 	"github.com/aws/aws-sdk-go-v2/service/s3"
 
 	"github.com/panjf2000/ants/v2"
@@ -37,13 +39,13 @@ func uploadOneObject(i interface{}) {
 		log.Println("Failed opening file", path, err)
 	}
 	defer file.Close()
-
+	//begin call
 	_, err = uploader.Upload(context.TODO(), &s3.PutObjectInput{
 		Bucket: aws.String("dateneimer"),
 		Key:    &key,
 		Body:   file,
 	})
-
+	//end call
 	if err != nil {
 		// Process error generically
 		log.Println("Error:", err.Error())
@@ -59,9 +61,9 @@ func main() {
 
 	// Use the common pool.
 	var wg sync.WaitGroup
-
+	//begin manager
 	uploader = manager.NewUploader(client)
-
+	//end manager
 	p, _ := ants.NewPoolWithFunc(parallel, func(i interface{}) {
 		uploadOneObject(i)
 		wg.Done()
