@@ -1,0 +1,14 @@
+# https://taskfile.dev
+
+version: '3'
+
+vars:
+  GREETING: Hello, World!
+
+tasks:
+  build-linux:
+    cmds:
+      - mkdir -p dist/linux
+      - GOOS=linux GOARCH=amd64 go build -o dist/linux/create30k
+
+    silent: true
