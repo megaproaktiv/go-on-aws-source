@@ -20,6 +20,11 @@ tasks:
     cmds:
       - ./dist/create
 
+  show:
+    desc: Show items
+    cmds:
+      - aws dynamodb scan --table-name {{.TABLE}}
+
   build:
     desc: Build app
     sources:

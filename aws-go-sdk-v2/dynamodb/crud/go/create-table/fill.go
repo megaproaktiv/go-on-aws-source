@@ -12,25 +12,18 @@ import (
 
 type BarJoke struct {
 	Name     string `json:"name" dynamodbav:"NAME"`
-	Rating   int    `json:"rating"`
+	Rating   float64    `json:"rating"`
 	Headline string `json:"headline"`
 	Content  string `json:"content"`
 }
 
 func FillTable(table *string) error{
-	// Read JSON file
-	fileBytes, err := os.ReadFile("items.json")
-	if err != nil {
-		fmt.Println("failed to read JSON file:", err)
+
+	items,err := ReadFile();
+	if err != nil {	
 		return err
 	}
 
-	// Unmarshal JSON into a slice of items
-	var items []BarJoke
-	err = json.Unmarshal(fileBytes, &items)
-	if err != nil {
-		fmt.Println("failed to unmarshal JSON:", err)
-	}
 
 	// Put each item into DynamoDB
 	for _, record := range items {
@@ -53,4 +46,21 @@ func FillTable(table *string) error{
 		
 	}
 	return nil
+}
+
+func ReadFile() ([]BarJoke, error) {
+		// Read JSON file
+		fileBytes, err := os.ReadFile("items.json")
+		if err != nil {
+			fmt.Println("failed to read JSON file:", err)
+			return nil,err
+		}
+	
+		// Unmarshal JSON into a slice of items
+		var items []BarJoke
+		err = json.Unmarshal(fileBytes, &items)
+		if err != nil {
+			fmt.Println("failed to unmarshal JSON:", err)
+		}
+		return items,nil
 }
