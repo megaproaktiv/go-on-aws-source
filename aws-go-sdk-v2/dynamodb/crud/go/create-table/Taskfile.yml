@@ -1,0 +1,32 @@
+# https://taskfile.dev
+
+version: '3'
+
+vars:
+  TABLE: barjokes
+
+tasks:
+  delete:
+    desc: Delete table
+    cmds:
+      - aws dynamodb delete-table --table-name {{.TABLE}}
+      - aws dynamodb wait table-not-exists --table-name {{.TABLE}}
+    silent: true
+
+  create:
+    desc: Create table
+    deps: 
+      - build
+    cmds:
+      - ./dist/create
+
+  build:
+    desc: Build app
+    sources:
+      - ./*.go
+      - main/*go
+    generates:
+      - dist/create
+    cmds:
+      - mkdir -p dist
+      - go build -o dist/create main/main.go
