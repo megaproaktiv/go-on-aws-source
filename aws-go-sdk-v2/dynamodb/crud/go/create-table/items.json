@@ -7,7 +7,7 @@
     },
     {
         "name": "Chihuahua",
-        "ratign": 4,
+        "rating": 4,
         "headline": "A man with a great dane and a man with a Chihuahua go to a bar, but it says 'no pets allowed'",
         "content": "One man says to the other “how will we bring our dogs inside?” The second man gives the first a pair of very dark sunglasses and says “do what I do.” He goes inside and the manager says “Sorry, no pets allowed.” The man says “You don’t understand. This is my guide dog.” “A great dane? Really?” Says the manager. “Yeah, they just got them into service. He’s great at protecting me, and his sense of smell allows me to easily find my way around the city” The manager decides to let him in. The man with the Chihuahua was watching carefully, and goes “how hard can this be?” So he puts on his sunglasses and goes to the bar. The manager sees him and says once again: “sorry sir, not pets allowed.” You don’t understand, this is my guide dog.” Manager asks: “A chihuahua?” “A CHIHUAHUA?! THEY GAVE ME A CHIHUAHUA?!”"
 
@@ -16,7 +16,7 @@
         "name": "Irishman",
         "headline": "An Irishman walks into a bar in Toronto",
         "content": "n Irishman walks into a bar in Toronto and orders a drink. The bartender, noticing his accent, asks him 'what brings you to Canada?' The Irishman says, 'well, I was in a pub in Dublin and the coaster under my glass said 'Drink Canada Dry', so I thought I'd give it a shot.'",
-        "ratign": 3
+        "rating": 3
     }
 
 ]
