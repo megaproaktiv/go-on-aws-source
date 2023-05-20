@@ -38,7 +38,7 @@ func Create(client *dynamodb.Client) {
 	languageID := "GOCLIENT"
 
 	params := &dynamodb.PutItemInput{
-		Item:                        map[string]types.AttributeValue{
+		Item:  map[string]types.AttributeValue{
 			string(LanguageStatus_FieldID): &types.AttributeValueMemberS{
 				Value:  languageID,
 			},
@@ -51,7 +51,7 @@ func Create(client *dynamodb.Client) {
 
 	_, err := client.PutItem(context.TODO(), params)
 	if err != nil {
-		log.Fatal("Error wirth put:", err)
+		log.Fatal("Error with put:", err)
 	}
 
 }

@@ -13,7 +13,7 @@ import (
 
 var client *dynamodb.Client
 
-func init(){
+func init() {
 	cfg, err := config.LoadDefaultConfig(context.TODO())
 	if err != nil {
 		panic("configuration error, " + err.Error())
@@ -22,46 +22,41 @@ func init(){
 
 }
 
-
-
-
 func main() {
 
-	languageID := "GOCLIENT"
-
+	//begin get
+	tableName := "barjokes"
+	NAME := "moebius"
 	params := &dynamodb.GetItemInput{
-		Key:                      map[string]types.AttributeValue{
-			string("ID"): &types.AttributeValueMemberS{
-				Value:  languageID,
+		Key: map[string]types.AttributeValue{
+			string("NAME"): &types.AttributeValueMemberS{
+				Value: NAME,
 			},
 		},
-		TableName:                   aws.String("crud"),
-
+		TableName: aws.String(tableName),
 	}
 
 	response, err := client.GetItem(context.TODO(), params)
+	//end get
+
 	if err != nil {
-		log.Fatal("Error ddb put:", err)
+		log.Fatal("Error ddb get:", err)
 	}
-	for i, item := range response.Item{
+
+	//begin read
+	for k, item := range response.Item {
 		var content string
 		// type switches can be used to check the union value
 		switch v := item.(type) {
-		case *types.AttributeValueMemberN:
-			content = v.Value // Value is string
-		case *types.AttributeValueMemberS:
-			content = v.Value // Value is string
-		case *types.AttributeValueMemberSS:
-			_ = v.Value // Value is []string
-		case *types.UnknownUnionMember:
-			fmt.Println("unknown tag:", v.Tag)
-		default:
-			fmt.Println("nil or unknown type")
-
+			case *types.AttributeValueMemberN:
+				content = v.Value // Value is string
+			case *types.AttributeValueMemberS:
+				content = v.Value // Value is string
+			default:
+				fmt.Println("nil or unknown type")
 		}
-		fmt.Printf("Response number %v: %v \n",i,content)
+		fmt.Printf("%s: %v \n", k, content)
 	}
+	//end read
 
 }
-
-
