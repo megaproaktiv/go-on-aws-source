@@ -16,7 +16,13 @@
         "name": "Irishman",
         "headline": "An Irishman walks into a bar in Toronto",
         "content": "n Irishman walks into a bar in Toronto and orders a drink. The bartender, noticing his accent, asks him 'what brings you to Canada?' The Irishman says, 'well, I was in a pub in Dublin and the coaster under my glass said 'Drink Canada Dry', so I thought I'd give it a shot.'",
-        "rating": 3
+        "rating": 4
+    },
+    {
+        "name" : "Whales",
+        "headline": "Two whales go up to the bartender",
+        "content" : "The bartender asks them what they want. The first whale says, 'WOOOOOOO. WOOOOOOOOOOOOOOOOOOOOOOOOO. WEEEEEEEEEEOOOOO. WEEEEEEEEEEEEEEEEEEEEEEEEEEOOOOOOOOOOOOOOOOOOOOO. 'The second whale says, 'Shut up, Frank, you're drunk.'",
+        "rating": 4
     }
 
 ]

@@ -5,12 +5,10 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/aws/aws-sdk-go-v2/aws"
 	"github.com/aws/aws-sdk-go-v2/config"
 	"github.com/aws/aws-sdk-go-v2/feature/dynamodb/attributevalue"
 	"github.com/aws/aws-sdk-go-v2/feature/dynamodb/expression"
 	"github.com/aws/aws-sdk-go-v2/service/dynamodb"
-	"github.com/aws/aws-sdk-go-v2/service/dynamodb/types"
 )
 
 var client *dynamodb.Client
@@ -24,45 +22,53 @@ func init(){
 
 }
 
-type LanguageStatus struct {
-	ID string       `dynamodbav:"ID"`
-	Status  string	`dynamodbav:"Status"`
+//begin struct
+type BarJoke struct {
+	Name     string `dynamodbav:"NAME"`
+	Rating   float64    `dynamodbav:"rating"`
+	Headline string `dynamodbav:"headline"`
+	Content  string `dynamodbav:"content"`
 }
+//end struct
+
 
 
 
 func main() {
-	
-	// Filter
-	filter := expression.Name("ID").BeginsWith("GO")
-	
-	// Build the dynamodb syntax for querys
+	tableName := "barjokes"
+	//begin filter
+	filter := expression.Name("Headline").Contains("bartender")
+
 	expr, err := expression.NewBuilder().WithFilter(filter).Build()
+	//end filter
+
 	if err != nil {
 		fmt.Println("Got error building expression:")
 		fmt.Println(err.Error())
 		return
 	}
 
+	//begin params
 	params := &dynamodb.ScanInput{
 		ExpressionAttributeNames:  expr.Names(),
 		ExpressionAttributeValues: expr.Values(),
 		FilterExpression:          expr.Filter(),
 		ProjectionExpression:      expr.Projection(),
-		TableName:                 aws.String("crud"),
+		TableName:                 &tableName,
 	}
-
+	
 	result, err := client.Scan(context.TODO(), params)
+	//end params
 	if err != nil {
 		log.Fatal("Error ddb get:", err)
 	}
 
-	// type ScanOutput  
-	// has 
+	// type ScanOutput
+	// has
 	// Items []map[string]types.AttributeValue
 	// as variable, so use UnmarshalMap
 
-	items := []LanguageStatus{}
+	items := []BarJoke{}
 
 	err = attributevalue.UnmarshalListOfMaps(result.Items, &items)
 	if err != nil {
@@ -70,15 +76,9 @@ func main() {
 	}
 
 
-	err = attributevalue.UnmarshalListOfMaps(result.Items, &items)
-	if err != nil {
-		log.Fatal("failed to unmarshal Items, %w", err)
-	}
-
 	// Now items struct is filled
 	for _,item := range items {
-		fmt.Printf("Status is: %v\n",item.Status)
+		fmt.Printf("Headline is: %v\n",item.Headline)
 	}
-	
-}
 
+}
