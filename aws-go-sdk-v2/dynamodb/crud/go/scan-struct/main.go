@@ -14,7 +14,7 @@ import (
 var client *dynamodb.Client
 
 func init(){
-	cfg, err := config.LoadDefaultConfig(context.TODO())
+  	cfg, err := config.LoadDefaultConfig(context.TODO())
 	if err != nil {
 		panic("configuration error, " + err.Error())
 	}
@@ -56,7 +56,7 @@ func main() {
 		ProjectionExpression:      expr.Projection(),
 		TableName:                 &tableName,
 	}
-	
+
 	result, err := client.Scan(context.TODO(), params)
 	//end params
 	if err != nil {
