@@ -7,6 +7,7 @@ import (
 	"github.com/aws/jsii-runtime-go"
 )
 
+//begin stack
 type HellocdkStackProps struct {
 	awscdk.StackProps
 }
@@ -17,28 +18,25 @@ func NewHellocdkStack(scope constructs.Construct, id string, props *HellocdkStac
 		sprops = props.StackProps
 	}
 	stack := awscdk.NewStack(scope, &id, &sprops)
-
-	// The code that defines your stack goes here
-
-	// as an example, here's how you would define an AWS SNS topic:
 	awssns.NewTopic(stack, jsii.String("MyTopic"), &awssns.TopicProps{
 		DisplayName: jsii.String("MyCoolTopic"),
 	})
 
 	return stack
 }
+//end stack
 
+//begin main
 func main() {
 	app := awscdk.NewApp(nil)
-
 	NewHellocdkStack(app, "HellocdkStack", &HellocdkStackProps{
 		awscdk.StackProps{
 			Env: env(),
 		},
 	})
-
 	app.Synth(nil)
 }
+//end main
 
 // env determines the AWS environment (account+region) in which our stack is to
 // be deployed. For more information see: https://docs.aws.amazon.com/cdk/latest/guide/environments.html
