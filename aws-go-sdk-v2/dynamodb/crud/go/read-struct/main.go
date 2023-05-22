@@ -23,51 +23,46 @@ func init(){
 
 }
 
-type LanguageStatus struct {
-	ID string       `dynamodbav:"ID"`
-	Status  string	`dynamodbav:"Status"`
+//begin struct
+type BarJoke struct {
+	Name     string `dynamodbav:"NAME"`
+	Rating   float64    `dynamodbav:"rating"`
+	Headline string `dynamodbav:"headline"`
+	Content  string `dynamodbav:"content"`
 }
-
+//end struct
 
 
 func main() {
 
-	languageID := "GOCLIENT2"
-
-	
-
-	// AttributeValue Unmarshaling 
-	// To unmarshal an AttributeValue to a Go type you can use the Unmarshal,
-	//  UnmarshalList, UnmarshalMap, and UnmarshalListOfMaps functions.
-	// The List and Map functions are specialized versions of the Unmarshal function 
-	// for unmarshal slices and maps of Attributevalues.
+	//begin get
+	tableName := "barjokes"
+	NAME := "moebius"
 	params := &dynamodb.GetItemInput{
-		Key:                      map[string]types.AttributeValue{
-			string("ID"): &types.AttributeValueMemberS{
-				Value:  languageID,
+		Key: map[string]types.AttributeValue{
+			string("NAME"): &types.AttributeValueMemberS{
+				Value: NAME,
 			},
 		},
-		TableName:                   aws.String("crud"),
+		TableName: aws.String(tableName),
 	}
 
-	result, err := client.GetItem(context.TODO(), params)
+	response, err := client.GetItem(context.TODO(), params)
+	//end get
+
 	if err != nil {
 		log.Fatal("Error ddb get:", err)
 	}
-
-	// type GetItemOutput 
-	// has 
-	// Item map[string]types.AttributeValue
-	// as variable, so use UnmarshalMap
-
-	var item LanguageStatus
-	err = attributevalue.UnmarshalMap(result.Item, &item)
+	//begin unmarshal
+	var joke BarJoke
+	attributevalue.UnmarshalMap(response.Item,&joke)
+	//end unmarshal
 	if err != nil {
-		log.Fatal("failed to unmarshal Items, %w", err)
+		log.Fatal("Error UnmarshalMap :", err)
 	}
 
-	// Now item struct is filled
-	fmt.Printf("Status is: %v\n",item.Status)
-	
+	//begin output
+	fmt.Printf("Headline: %v\n", joke.Headline)
+	//end output
 }
 

@@ -49,7 +49,7 @@ func main() {
 		// type switches can be used to check the union value
 		switch v := item.(type) {
 			case *types.AttributeValueMemberN:
-				content = v.Value // Value is string
+				content = v.Value // Value is number
 			case *types.AttributeValueMemberS:
 				content = v.Value // Value is string
 			default:
