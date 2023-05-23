@@ -2,8 +2,10 @@ package main
 
 import (
 	"github.com/aws/aws-cdk-go/awscdk/v2"
+	//begin import
 	"github.com/aws/aws-cdk-go/awscdk/v2/awssns"
 	"github.com/aws/constructs-go/constructs/v10"
+	//end import
 	"github.com/aws/jsii-runtime-go"
 )
 

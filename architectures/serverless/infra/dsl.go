@@ -69,10 +69,11 @@ func NewDslStack(scope constructs.Construct, id string, props *DslStackProps) aw
 	},
 )
 	// Tell Lambda the dynamic bucket name
+	//begin instrumentation
 	myHandler.AddEnvironment(aws.String("Bucket"), bucky.BucketName(), nil);
-	// *
 	// give lambda read rights
 	bucky.GrantRead(myHandler, aws.String("*"))
+	//end instrumentation
 	// *
 	// Bucket end *******************
 
