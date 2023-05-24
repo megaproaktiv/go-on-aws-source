@@ -36,7 +36,7 @@ func NewCdktableStack(scope constructs.Construct, id string, props *CdktableStac
 			Type: dynamodb.AttributeType_STRING,
 		},
 		BillingMode: dynamodb.BillingMode_PAY_PER_REQUEST,
-		TableName:   aws.String("barjokes"),
+		TableName:   aws.String("barjokes-cdk"),
 	})
 	//end table
 
