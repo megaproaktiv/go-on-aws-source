@@ -32,7 +32,7 @@ tasks:
     cmds:
       - aws lambda update-function-code --function-name  {{.FN}} --zip-file fileb://../dist/main.zip
 
-  test-app:
+  test:
     desc: all go test
     cmds:
-      - go test    
+      - go test . 

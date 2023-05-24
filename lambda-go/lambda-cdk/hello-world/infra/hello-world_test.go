@@ -25,6 +25,6 @@ func TestHelloWorldStack(t *testing.T) {
 	}
 
 	template := gjson.ParseBytes(bytes)
-	displayName := template.Get("Resources.MyTopic86869434.Properties.DisplayName").String()
-	assert.Equal(t, "MyCoolTopic", displayName)
+	functionName := template.Get("Resources.simplelambda37A1EE60.Properties.FunctionName").String()
+	assert.Equal(t, "sayhello", functionName)
 }

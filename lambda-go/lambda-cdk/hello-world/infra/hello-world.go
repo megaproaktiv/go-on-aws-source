@@ -16,7 +16,7 @@ import (
 )
 
 type HelloWorldStackProps struct {
-	awscdk.StackProps
+	StackProps awscdk.StackProps
 }
 
 func NewHelloWorldStack(scope constructs.Construct, id string, props *HelloWorldStackProps) awscdk.Stack {
@@ -33,17 +33,20 @@ func NewHelloWorldStack(scope constructs.Construct, id string, props *HelloWorld
 	}
 	lambdaPath := filepath.Join(path, "../dist/main.zip")
 
+	//begin lambda
 	fn := lambda.NewFunction(stack, aws.String("simplelambda"), 
 	&lambda.FunctionProps{
 		Description:                  aws.String("Simple Lambda says hello"),
 		FunctionName:                 aws.String("sayhello"),
 		LogRetention:                 logs.RetentionDays_THREE_MONTHS,
 		MemorySize:                   aws.Float64(1024),
-		Timeout:                      awscdk.Duration_Seconds(aws.Float64(10)),
+		Timeout:                      awscdk.Duration_Seconds(aws.Float64(3)),
 		Code: lambda.Code_FromAsset(&lambdaPath, &awss3assets.AssetOptions{}),
 		Handler: aws.String("main"),
 		Runtime:                      lambda.Runtime_GO_1_X(),
+		
 	})
+	//end lambda
 
 	ssm.NewStringParameter(stack, aws.String("Functionname"), &ssm.StringParameterProps{
 		Description:    aws.String("helloworldlamba"),

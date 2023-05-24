@@ -9,7 +9,7 @@ func main() {
 	app := awscdk.NewApp(nil)
 
 	hello.NewHelloWorldStack(app, "hello", &hello.HelloWorldStackProps{
-		awscdk.StackProps{
+		StackProps: awscdk.StackProps{
 			Env: env(),
 		},
 	})

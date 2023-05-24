@@ -44,3 +44,8 @@ tasks:
       - cmd: echo Profile{{.PROFILE}}
         silent: true
       -  npx  aws-cdk@{{.version}}  destroy --force --profile {{.PROFILE}}
+
+  test:
+    desc: CDK unit test
+    cmds:
+      - go test .    
