@@ -15,10 +15,9 @@ import (
 	"github.com/aws/smithy-go"
 )
 
-
 var Client *dynamodb.Client
 
-func init(){
+func init() {
 	cfg, err := config.LoadDefaultConfig(context.TODO())
 	if err != nil {
 		panic("unable to load SDK config, " + err.Error())
@@ -27,27 +26,27 @@ func init(){
 	Client = dynamodb.NewFromConfig(cfg)
 }
 
-
 func PutItem(client *dynamodb.Client, itemID string, tableName string) error {
 
 	t := time.Now()
-
+	//begin dynamodbput
 	input := &dynamodb.PutItemInput{
-        Item: map[string]types.AttributeValue{
-            "itemID": &types.AttributeValueMemberS{
-               Value: itemID,
+		Item: map[string]types.AttributeValue{
+			"itemID": &types.AttributeValueMemberS{
+				Value: itemID,
 			},
-			"time" : &types.AttributeValueMemberS{
+			"time": &types.AttributeValueMemberS{
 				Value: t.String(),
 			},
-        },
-        TableName: aws.String(tableName),
-    }
+		},
+		TableName: aws.String(tableName),
+	}
+	//end dynamodbput
 
 	// Build the request with its input parameters
-	_, err := client.PutItem(context.TODO(),input)
+	_, err := client.PutItem(context.TODO(), input)
 	if err != nil {
-    // To get a specific API error
+		// To get a specific API error
 		var notFoundErr *types.ResourceNotFoundException
 		if errors.As(err, &notFoundErr) {
 			log.Printf("scan failed because the table was not found, %v",
@@ -69,7 +68,7 @@ func PutItem(client *dynamodb.Client, itemID string, tableName string) error {
 		}
 
 		return err
-		
+
 	}
 
 	return nil

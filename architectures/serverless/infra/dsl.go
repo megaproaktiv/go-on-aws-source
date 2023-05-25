@@ -34,6 +34,7 @@ func NewDslStack(scope constructs.Construct, id string, props *DslStackProps) aw
 	if err != nil {
 		log.Println(err)
 	}
+	//begin lambda
 	lambdaPath := filepath.Join(path, "../app/dist/main.zip")
 	
 	myHandler := awslambda.NewFunction(stack, aws.String("myHandler"), 
@@ -47,6 +48,7 @@ func NewDslStack(scope constructs.Construct, id string, props *DslStackProps) aw
 		Handler: aws.String("main"),
 		Runtime: awslambda.Runtime_GO_1_X(),
 	})
+	//end lambda
 	awsssm.NewStringParameter(stack, aws.String("handler-output"), 
 		&awsssm.StringParameterProps{
 			Description:    aws.String("Store lambda function name"),
@@ -58,9 +60,11 @@ func NewDslStack(scope constructs.Construct, id string, props *DslStackProps) aw
 
 	// Bucket start ****************
     // *
+	//begin bucket
     bucky := awss3.NewBucket(stack, aws.String("incoming-gov2"), &awss3.BucketProps{
     	BlockPublicAccess:      awss3.BlockPublicAccess_BLOCK_ALL(),
     });	
+	//end bucket
 	awsssm.NewStringParameter(stack, aws.String("bucket-output"), 
 	&awsssm.StringParameterProps{
 		Description:    aws.String("Store bucket name"),
@@ -85,6 +89,7 @@ func NewDslStack(scope constructs.Construct, id string, props *DslStackProps) aw
 
 	//** Dynamodb start ******
     // do not force table name, this leads to singleTimeDeployability
+	//begin table
     myTable := awsdynamodb.NewTable(stack, aws.String("items"), &awsdynamodb.TableProps{
     	PartitionKey:               &awsdynamodb.Attribute{
     		Name: aws.String("itemID"),
@@ -95,6 +100,7 @@ func NewDslStack(scope constructs.Construct, id string, props *DslStackProps) aw
   
 	myTable.GrantReadWriteData(myHandler);
 	myHandler.AddEnvironment(aws.String("TableName"), myTable.TableName(), nil);
+	//end table
 	awsssm.NewStringParameter(stack, aws.String("table-output"), 
 		&awsssm.StringParameterProps{
 			Description:    aws.String("Store ltable name"),

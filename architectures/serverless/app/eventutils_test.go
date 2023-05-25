@@ -1,4 +1,6 @@
+//begin package 
 package dsl_test
+//end package
 
 import (
 	"fmt"
@@ -12,7 +14,11 @@ import (
 	"dsl"
 )
 
+//begin testfunction
 func TestAppExtractObject(t *testing.T){
+	//end testfunction
+
+	//begin mockevent
 	var s3event events.S3Event;
 
 	const testfile = "test/put.json"
@@ -30,7 +36,7 @@ func TestAppExtractObject(t *testing.T){
 	}
 
 	err = json.Unmarshal([]byte(byteValue), &s3event)
-
+	//end mockevent
 
 	assert.Equal(t,nil,err);
 

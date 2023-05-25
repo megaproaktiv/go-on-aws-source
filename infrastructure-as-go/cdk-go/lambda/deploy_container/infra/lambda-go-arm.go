@@ -29,7 +29,7 @@ func NewLambdaGoArmStack(scope constructs.Construct, id string, props *LambdaGoA
 		log.Println(err)
 	}
 	dockerfile := filepath.Join(path, "../app")
-	
+	//begin lambda_arm
 	awslambda.NewDockerImageFunction(stack,
 		aws.String("RegisterHandlerArm"),
 		&awslambda.DockerImageFunctionProps{
@@ -39,7 +39,7 @@ func NewLambdaGoArmStack(scope constructs.Construct, id string, props *LambdaGoA
 			Timeout:                      awscdk.Duration_Seconds(aws.Float64(300)),
 			Code:                         awslambda.DockerImageCode_FromImageAsset(&dockerfile, &awslambda.AssetImageCodeProps{}),
 		})
-		
+	//end lambda_arm
 	dockerfile = filepath.Join(path, "../appx86")
 	awslambda.NewDockerImageFunction(stack,
 		aws.String("RegisterHandlerAmd"),

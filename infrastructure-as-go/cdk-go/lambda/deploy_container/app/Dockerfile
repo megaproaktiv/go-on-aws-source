@@ -1,3 +1,4 @@
+#begin 
 FROM public.ecr.aws/lambda/provided:al2 AS build
 ENV CGO_ENABLED=0
 RUN mkdir -p /opt/extensions
@@ -11,3 +12,4 @@ RUN env GOOS=linux GOARCH=arm64 go build -o=/main
 FROM public.ecr.aws/lambda/provided:al2
 COPY --from=build /main /main
 ENTRYPOINT [ "/main" ]
+#end
