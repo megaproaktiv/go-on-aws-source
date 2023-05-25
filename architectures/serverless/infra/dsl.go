@@ -77,11 +77,11 @@ func NewDslStack(scope constructs.Construct, id string, props *DslStackProps) aw
 	// *
 	// Bucket end *******************
 
-	// Event start *******************
+	//begin event  *******************
 	myHandler.AddEventSource(event.NewS3EventSource(bucky, &event.S3EventSourceProps{
 		Events:  &[]awss3.EventType{awss3.EventType_OBJECT_CREATED,},
 	}))
-	// Event End   *******************
+	//end event  *******************
 
 	//** Dynamodb start ******
     // do not force table name, this leads to singleTimeDeployability

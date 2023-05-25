@@ -9,7 +9,6 @@ import (
 
 
 )
-// Hier geht dann langsam die Übersicht verloren
 // HandleRequest S3 Event
 func handler(ctx context.Context, s3Event events.S3Event) {
 	// See https://github.com/aws/aws-lambda-go/tree/master/events

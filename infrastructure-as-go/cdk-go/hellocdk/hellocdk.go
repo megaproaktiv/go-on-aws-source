@@ -9,9 +9,9 @@ import (
 	"github.com/aws/jsii-runtime-go"
 )
 
-//begin stack
+// begin stack
 type HellocdkStackProps struct {
-	awscdk.StackProps
+	StackProps awscdk.StackProps
 }
 
 func NewHellocdkStack(scope constructs.Construct, id string, props *HellocdkStackProps) awscdk.Stack {
@@ -23,21 +23,22 @@ func NewHellocdkStack(scope constructs.Construct, id string, props *HellocdkStac
 	awssns.NewTopic(stack, jsii.String("MyTopic"), &awssns.TopicProps{
 		DisplayName: jsii.String("MyCoolTopic"),
 	})
-
 	return stack
 }
+
 //end stack
 
-//begin main
+// begin main
 func main() {
 	app := awscdk.NewApp(nil)
 	NewHellocdkStack(app, "HellocdkStack", &HellocdkStackProps{
-		awscdk.StackProps{
+		StackProps: awscdk.StackProps{
 			Env: env(),
 		},
 	})
 	app.Synth(nil)
 }
+
 //end main
 
 // env determines the AWS environment (account+region) in which our stack is to

@@ -13,39 +13,13 @@ env:
   CDK_DEFAULT_ACCOUNT: 
     sh: aws sts get-caller-identity --query Account --output text
 
+
 includes:
   app:
     taskfile: ./app/Taskfile.yml
     dir: ./app
-
+  infra:
+    taskfile: ./infra/Taskfile.yml
+    dir: ./infra
+    
 tasks:
-
-
-  list:
-    desc: List stacks 
-    cmds:
-      - cdkstat
-    
-
-  diff:
-    dir: infra
-    desc: Show stack differences
-    cmds:
-      - npx cdk@{{.version}} diff
-    
-  deploy:
-    dir: infra
-    desc: deploy stack without asking, build lambda before
-    deps: [app:build]
-    cmds:
-      - cmd: echo Profile $AWSUME_PROFILE
-        silent: true
-      - npx {{.npxoptions}} cdk@{{.version}}  deploy  --require-approval never --profile $AWSUME_PROFILE
-
-  destroy:
-    dir: infra
-    desc: destroy stack without asking
-    cmds:
-      - cmd: echo Profile $AWSUME_PROFILE
-        silent: true
-      -  npx  cdk@{{.version}}  destroy --force --profile $AWSUME_PROFILE
