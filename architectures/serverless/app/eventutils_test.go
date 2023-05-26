@@ -21,7 +21,7 @@ func TestAppExtractObject(t *testing.T){
 	//begin mockevent
 	var s3event events.S3Event;
 
-	const testfile = "test/put.json"
+	const testfile = "testdata/put.json"
 	jsonFile, err := os.Open(testfile)
 	if err != nil {
 		fmt.Println(err)
@@ -36,13 +36,13 @@ func TestAppExtractObject(t *testing.T){
 	}
 
 	err = json.Unmarshal([]byte(byteValue), &s3event)
+	assert.Equal(t,nil,err);
 	//end mockevent
 
-	assert.Equal(t,nil,err);
-
+	//begin assertion
 	expectedKey := "my2etestkey.txt"
 	realKey := dsl.ExtractKey(s3event);
-
 	assert.Equal(t, expectedKey,realKey)
+	//end assertion
 	
 }
