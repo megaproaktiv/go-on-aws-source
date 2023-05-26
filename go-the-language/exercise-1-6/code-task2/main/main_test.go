@@ -5,10 +5,13 @@ import (
 	"os/exec"
 	"strings"
 	"testing"
+    //begin import
     "gotest.tools/assert"
+    //end import
 
 )
 
+//begin test
 func TestMainOutput(t *testing.T) {
     var err error
     cmd := exec.Command("go", "run", "main.go")
@@ -18,7 +21,7 @@ func TestMainOutput(t *testing.T) {
         fmt.Println(sout) // so we can see the full output 
         t.Errorf("%v", err)
     }
-
+//end test
     expect := `Walk into a bar story:
 Bob and Alice walked into a bar.
 Bob is excited.
@@ -35,9 +38,10 @@ Bartender said to [Bob Alice], "Congratulations to both of you! First round's on
 Bob is grateful.
 Alice is grateful.
 End
-`    
+`   //begin test
+    // set expect to expected string (to long to include)
     assert.Equal(t,  expect, sout, "Expected output")
-    
+    //end test
     
 
 

@@ -10,3 +10,7 @@ tasks:
     desc: Run main.go
     cmds:
       - go run main/main.go
+  test:
+    desc: Run go tests
+    cmds:
+      - go test ./...    
