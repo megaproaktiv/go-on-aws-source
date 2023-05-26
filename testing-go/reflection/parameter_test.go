@@ -16,6 +16,7 @@ import (
 )
 
 func TestGetTableNameFile(t *testing.T) {
+	//begin mockfunction
 	GetParameterFunc := func(ctx context.Context, params *ssm.GetParameterInput) (*ssm.GetParameterOutput, error) {	
 		
 		testfile := "testdata/ssm-get-parameter.json"
@@ -31,19 +32,16 @@ func TestGetTableNameFile(t *testing.T) {
 		}
 		return out,nil
 	}
+	//end mockfunction
 
-	// Create a Mock Handler
+	//begin test
 	mockCfg := awsmock.NewAwsMockHandler()
-	// add a function to the handler
-	// Routing per paramater types
 	mockCfg.AddHandler(GetParameterFunc)
-
 	client := ssm.NewFromConfig(mockCfg.AwsConfig())
-
 	name := reflection.GetTableName(client)
 	
-	
 	assert.Equal(t, "totalfancyname",*name)
+	//end test
 
 }
 

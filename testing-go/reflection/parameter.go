@@ -18,7 +18,9 @@ func init(){
 	Client = ssm.NewFromConfig(cfg)
 }
 
+//begin testee
 func GetTableName(client *ssm.Client) *string {
+	
 	parms := &ssm.GetParameterInput{
 		Name: aws.String("/go-on-aws/table"),
 	}
@@ -29,3 +31,4 @@ func GetTableName(client *ssm.Client) *string {
 	value := resp.Parameter.Value
 	return value
 }
+//end testee
