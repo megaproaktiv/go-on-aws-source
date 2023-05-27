@@ -1,17 +1,19 @@
-package reflection_test
+package awsmockdemo_test
 
 import (
 	"context"
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
-	"reflection"
+	"awsmockdemo"
 	"testing"
 
 	"github.com/aws/aws-sdk-go-v2/aws"
 	"github.com/aws/aws-sdk-go-v2/service/ssm"
 	"github.com/aws/aws-sdk-go-v2/service/ssm/types"
+	//begin import
 	"github.com/megaproaktiv/awsmock"
+	//end import
 	"gotest.tools/assert"
 )
 
@@ -38,7 +40,7 @@ func TestGetTableNameFile(t *testing.T) {
 	mockCfg := awsmock.NewAwsMockHandler()
 	mockCfg.AddHandler(GetParameterFunc)
 	client := ssm.NewFromConfig(mockCfg.AwsConfig())
-	name := reflection.GetTableName(client)
+	name := awsmockdemo.GetTableName(client)
 	
 	assert.Equal(t, "totalfancyname",*name)
 	//end test
@@ -64,7 +66,7 @@ func TestGetTableNameStruct(t *testing.T) {
 	// Create mocking client
 	client := ssm.NewFromConfig(mockCfg.AwsConfig())
 
-	name := reflection.GetTableName(client)
+	name := awsmockdemo.GetTableName(client)
 	assert.Equal(t, "anothertotalfancyname",*name)
 
 }

@@ -1,13 +1,13 @@
 package main
 
 import (
-  "reflection"
+  "awsmockdemo"
   "fmt"
 )
 
 func main(){
 
-  value := reflection.GetTableName(reflection.Client);
+  value := awsmockdemo.GetTableName(awsmockdemo.Client);
   fmt.Println("Value is: ", *value);
 
 }
