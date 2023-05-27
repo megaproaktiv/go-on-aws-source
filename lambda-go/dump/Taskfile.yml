@@ -1,0 +1,45 @@
+# https://taskfile.dev
+
+version: '3'
+
+vars:
+  NAME: sayhello
+  CODE: code.zip
+
+
+tasks:
+
+  build:
+    desc: build go
+    cmds:
+      - env GOOS=linux GOARCH=amd64 go build -ldflags="-s -w" -o ./dist/main main.go
+      - chmod +x ./dist/main
+      - cd ./dist && zip main.zip main
+    sources:
+      - ./*.go
+      - main/*.go
+      - Taskfile.yml
+    generates:
+      - ../dist/main
+    silent: true
+
+  deploy:
+    desc: Deploy only Lambda function
+    deps: [build]
+    cmds:
+      - aws lambda update-function-code --function-name  {{.NAME}} --zip-file fileb://./dist/main.zip
+
+  save:
+    desc: save old lambda code
+    cmds:
+      - aws lambda get-function 
+          --function-name "{{.NAME}}" 
+          --query 'Code.Location' 
+          --output text >download.txt
+      -  wget -i download.txt -O {{.CODE}}
+
+
+  restore:
+    desc: restore old lambda code
+    cmds:
+      - aws lambda update-function-code --function-name  {{.NAME}} --zip-file fileb://{{.CODE}}
