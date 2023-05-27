@@ -9,6 +9,7 @@ import (
 	"github.com/tidwall/gjson"
 )
 
+//begin test
 func TestHellocdkStack(t *testing.T) {
 	// GIVEN
 	app := awscdk.NewApp(nil)
@@ -23,6 +24,11 @@ func TestHellocdkStack(t *testing.T) {
 	}
 
 	template := gjson.ParseBytes(bytes)
+	//end test
+	//begin test_assert
 	displayName := template.Get("Resources.MyTopic86869434.Properties.DisplayName").String()
 	assert.Equal(t, "MyCoolTopic", displayName)
+	//end test_assert
+	//begin test
 }
+//end test
