@@ -3,7 +3,6 @@ package dsl_test
 //end package
 
 import (
-	"fmt"
 	"os"
 	"testing"
     "io/ioutil"
@@ -24,15 +23,14 @@ func TestAppExtractObject(t *testing.T){
 	const testfile = "testdata/put.json"
 	jsonFile, err := os.Open(testfile)
 	if err != nil {
-		fmt.Println(err)
-		panic(err)
+		t.Log(err)
 	}
-	fmt.Println("Successfully Opened ", testfile)
+	t.Log("Successfully Opened ", testfile)
 	defer jsonFile.Close()
 
 	byteValue, _ := ioutil.ReadAll(jsonFile)
 	if err != nil {
-		print(err)
+		t.Error(err)
 	}
 
 	err = json.Unmarshal([]byte(byteValue), &s3event)
