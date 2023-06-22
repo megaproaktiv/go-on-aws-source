@@ -39,7 +39,7 @@ func main() {
 
 	for i, reservation := range result.Reservations {
 		for k, instance := range reservation.Instances {
-			fmt.Println("Instance number: ",i,"-",k	, "Id: ", instance.InstanceId)
+			fmt.Println("Instance number: ",i,"-",k	, "Id: ", *instance.InstanceId)
 		}
 	}
 }
