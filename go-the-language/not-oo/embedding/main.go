@@ -11,34 +11,37 @@ const (
 	InstanceStateStopped InstanceState = "stopped"
 )
 
-//begin declaration
+// begin declaration
 type Instance struct {
-	Name  string
-	State InstanceState
+	Name         string
+	State        InstanceState
 	Architecture //embedded field
 }
 
 type Architecture struct {
-  Name string
-  Price float64
-  Size string
+	Name  string
+	Price float64
+	Size  string
 }
 
-func (a Architecture) Description() string {
-  return a.Name
+func (a Instance) Description() string {
+	instanceType := a.Name
+	instanceArchitecture := a.Architecture.Name
+	msg := fmt.Sprintf("Instance: %s, Architecture: %s", instanceType, instanceArchitecture)
+	return msg
 }
+
 //end declaration
-
 
 func main() {
 	//begin main
 	instance := &Instance{
-		Name:         "G6",
-		State:        InstanceStateRunning,
+		Name:  "G6",
+		State: InstanceStateRunning,
 		Architecture: Architecture{
 			Name:  "ARM",
 			Price: 0.154,
-			Size: "xlarge",
+			Size:  "xlarge",
 		},
 	}
 	fmt.Println("Architecture: ", instance.Description())

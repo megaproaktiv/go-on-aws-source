@@ -40,8 +40,9 @@ func main() {
 		fmt.Printf("Error starting instance: %s\n", err.Error())
 		return
 	}
-
+	
 	instance.Observe()
+	
 
 	// Stop the instance
 
