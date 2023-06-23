@@ -1,0 +1,14 @@
+//begin
+{
+  "Buckets": [
+    {
+      "Name": "amplify-amplifyf7002ba9c2414-staging-140456-deployment",
+      "CreationDate": "2020-12-30T14:05:02+00:00"
+    },
+    {
+      "Name": "amplify-lambdatriggerexample-dev-154209-deployment",
+      "CreationDate": "2020-06-23T13:42:17+00:00"
+    }
+  ]
+}
+//end
