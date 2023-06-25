@@ -9,15 +9,18 @@ vars:
 
 tasks:
   run:
-    desc: Run opload
+    desc: Run upload
     deps:
       - build
     cmds:
       - date >{{.FILE}}
       - ls -l {{.FILE}}
       - aws s3 rm s3://{{.BUCKET}}/{{.PREFIX}}/test.txt
+      - echo "Before"
       - aws s3 ls {{.BUCKET}}/{{.PREFIX}}
+      - echo "Run ./dist/s3cp --file {{.FILE}} --bucket {{.BUCKET}} --prefix {{.PREFIX}}"
       - ./dist/s3cp --file {{.FILE}} --bucket {{.BUCKET}} --prefix {{.PREFIX}}
+      - echo "After"
       - aws s3 ls {{.BUCKET}}/{{.PREFIX}}
     silent: false
 
