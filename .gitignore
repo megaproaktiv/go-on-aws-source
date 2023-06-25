@@ -34,3 +34,4 @@ aws-go-sdk-v2/dynamodb/crud/go/create-table/dist
 lambda-go/dump/dist
 lambda-go/dump/code.zip
 lambda-go/dump/download.txt
+aws-go-sdk-v2/s3copy/testdata/test.txt
