@@ -1,4 +1,5 @@
 package s3share
+
 //file: upload.go
 import (
 	"bytes"
@@ -9,9 +10,9 @@ import (
 )
 
 // Load file to s3
-//begin function
-func Upload(client *s3.Client, filename *string,bucket *string) error {
-//end function
+// begin function
+func Upload(client *s3.Client, filename *string, bucket *string) error {
+	//end function
 
 	//begin upload
 	content, err := os.ReadFile(*filename)
@@ -24,16 +25,16 @@ func Upload(client *s3.Client, filename *string,bucket *string) error {
 	}
 	//end  error
 
-	key := filename
-	// Upload  file to s3 
+	// Upload  file to s3
 	//begin upload
+	key := filename
 	_, err = client.PutObject(
 		context.Background(),
 		&s3.PutObjectInput{
 			Bucket: bucket,
 			Key:    key,
 			Body:   bytes.NewReader(content),
-		}, 
+		},
 	)
 	//end upload
 	//handle error
@@ -41,7 +42,8 @@ func Upload(client *s3.Client, filename *string,bucket *string) error {
 		return err
 	}
 
-//begin function
+	//begin function
 	return nil
 }
+
 //end function

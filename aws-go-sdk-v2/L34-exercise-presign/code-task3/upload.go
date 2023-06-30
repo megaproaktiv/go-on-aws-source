@@ -20,9 +20,9 @@ func Upload(client *s3.Client, filename *string,bucket *string) error {
 		return err
 	}
 
-	key := filename
 	// Upload  file to s3 
 	//begin upload
+	key := filename
 	_, err = client.PutObject(
 		context.Background(),
 		&s3.PutObjectInput{
