@@ -57,7 +57,7 @@ func uploadOneObject(i interface{}) {
 func main() {
 
 	const max = 30000
-	const parallel = 50
+	const parallel = 100
 
 	// Use the common pool.
 	var wg sync.WaitGroup

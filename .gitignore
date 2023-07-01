@@ -35,3 +35,5 @@ lambda-go/dump/dist
 lambda-go/dump/code.zip
 lambda-go/dump/download.txt
 aws-go-sdk-v2/s3copy/testdata/test.txt
+aws-go-sdk-v2/s3/manyfiles/create30k-g
+aws-go-sdk-v2/s3/manyfiles/create30k-i

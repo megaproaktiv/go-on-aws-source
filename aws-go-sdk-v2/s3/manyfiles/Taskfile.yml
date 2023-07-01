@@ -7,10 +7,15 @@ vars:
 
 
 tasks:
-  build:
-    desc: Build binaries for linux gravition instances
+  buildg:
+    desc: Build binaries for linux graviton instances
     cmds:
-      - env GOOS=linux GOARCH=arm go build -o create30k  main.go
+      - env GOOS=linux GOARCH=arm go build -o create30k-g  main.go
+
+  buildi:
+    desc: Build binaries for linux graviton instances
+    cmds:
+      - env GOOS=linux GOARCH=amd64 go build -o create30k-i  main.go
 
   run:
     desc: Run locally
