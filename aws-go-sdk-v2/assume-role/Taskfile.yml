@@ -1,0 +1,41 @@
+# https://taskfile.dev
+
+version: '3'
+
+vars:
+  STACK: roledemo
+  TEMPLATE: "template/role.yaml"
+
+tasks:
+  setup:
+    desc: Create stack
+    cmds:
+      - aws cloudformation create-stack
+        --stack-name {{.STACK}}
+        --template-body file://{{.TEMPLATE}}
+        --capabilities CAPABILITY_NAMED_IAM
+    silent: false
+
+  run:
+    desc: go run
+    cmds:
+      - go run main/main.go
+
+  teardown:
+    desc: Create stack
+    cmds:
+      - aws cloudformation delete-stack
+        --stack-name {{.STACK}}
+
+    silent: false
+
+  test:
+    desc: go test
+    cmds:
+      - go test .
+
+  describe:
+    desc: Describe stack-resources
+    cmds:
+      - aws cloudformation describe-stack-resources
+        --stack-name {{.STACK}}
