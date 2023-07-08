@@ -21,7 +21,7 @@ func VpcStack(scope constructs.Construct, id string, props *VpcProps) cdk.Stack 
 	vpc := awsec2.NewVpc(stack, aws.String("go-on-aws-vpc"), &awsec2.VpcProps{
 		NatGateways: aws.Float64(1),
 	})
-	
+	//begin parameter
 	vpcParm := "/go-on-aws/vpc"
 	awsssm.NewStringParameter(stack, &vpcParm,
 		&awsssm.StringParameterProps{
@@ -30,6 +30,6 @@ func VpcStack(scope constructs.Construct, id string, props *VpcProps) cdk.Stack 
 			ParameterName:  &vpcParm,
 			StringValue:    vpc.VpcId(),
 		})
-
+	//end parameter
 	return stack
 }

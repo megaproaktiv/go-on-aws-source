@@ -33,16 +33,17 @@ func FargateStack(scope constructs.Construct, id string, props *FargateStackStac
 		sprops = props.StackProps
 	}
 	stack := cdk.NewStack(scope, &id, &sprops)
-
+	//begin getparameter
 	vpcid, err := pmstore.GetParameter("/go-on-aws/vpc", false)
 	if err != nil {
 		panic("Cant connect to Parameter Store")
 	}
-	
+
 	vpc := ec2.Vpc_FromLookup(stack, aws.String("vpc"), &ec2.VpcLookupOptions{
 		IsDefault: aws.Bool(false),
 		VpcId:     vpcid.Value,
 	})
+	//end getparameter
 	cluster := ecs.NewCluster(stack, aws.String("ALBFargoECSCluster"), &ecs.ClusterProps{
 		Vpc: vpc,
 	})
