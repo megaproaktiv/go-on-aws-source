@@ -13,7 +13,7 @@ tasks:
       - env GOOS=linux GOARCH=arm go build -o create30k-g  main.go
 
   buildi:
-    desc: Build binaries for linux graviton instances
+    desc: Build binaries for linux intel instances
     cmds:
       - env GOOS=linux GOARCH=amd64 go build -o create30k-i  main.go
 
