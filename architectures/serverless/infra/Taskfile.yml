@@ -48,4 +48,11 @@ tasks:
   test:
     desc: CDK unit test
     cmds:
-      - go test .    
+      - go test . -v
+
+  itest:
+    desc: CDK unit test
+    env:
+      I_TEST: "yes"
+    cmds:
+      - go test . -v 

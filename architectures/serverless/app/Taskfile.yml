@@ -56,13 +56,13 @@ tasks:
     cmds:
       - aws dynamodb delete-item --table-name {{.TABLE}} --key file://testdata/key.json
       - aws dynamodb get-item --table-name {{.TABLE}} --key file://testdata/key.json
-      - time aws lambda invoke --function-name {{.FN}} --payload fileb://./test/put.json  test/result.json
+      - time aws lambda invoke --function-name {{.FN}} --payload fileb://testdata/put.json  testdata/result.json
       - date
       - sleep 5
       - aws dynamodb get-item --table-name {{.TABLE}} --key file://testdata/key.json
 
-  etest:
-    desc: ende to end test put file in s3
+  etest-bash:
+    desc: end to end test put file in s3 - bash
     deps: [build]
     env: 
       AWS_PAGER: ""
@@ -81,6 +81,14 @@ tasks:
       - date
       - sleep 5
       - aws dynamodb get-item --table-name {{.TABLE}} --key file://testdata/key.json
+      
+  etest:
+    desc: end to end in go
+    env:
+      I_TEST: "yes"
+    deps: [build]
+    cmds:
+      - go test -v
 
   test:
     desc: call go test
