@@ -8,6 +8,7 @@ import (
 	"github.com/stretchr/testify/assert"
 	"github.com/tidwall/gjson"
 	"instance"
+	"instance/util"
 )
 
 func TestCdkInstanceStack(t *testing.T) {
@@ -15,7 +16,14 @@ func TestCdkInstanceStack(t *testing.T) {
 	app := awscdk.NewApp(nil)
 
 	// WHEN
-	stack := instance.CdkInstanceStack(app, "MyStack", nil)
+	// Set account and region in environment like:
+	//  export CDK_DEFAULT_REGION=eu-central-1
+	//  export CDK_DEFAULT_ACCOUNT=555555555555
+	stack :=instance.NewInstanceStack(app, "instance", &instance.InstanceStackProps{
+		StackProps: awscdk.StackProps{
+			Env: util.Env(),
+		},
+	})
 
 	// THEN
 	bytes, err := json.Marshal(app.Synth(nil).GetStackArtifact(stack.ArtifactId()).Template())
@@ -24,6 +32,6 @@ func TestCdkInstanceStack(t *testing.T) {
 	}
 
 	template := gjson.ParseBytes(bytes)
-	displayName := template.Get("Resources.MyTopic86869434.Properties.DisplayName").String()
-	assert.Equal(t, "MyCoolTopic", displayName)
+	displayName := template.Get("Resources.monolithDEBCB820.Properties.InstanceType").String()
+	assert.Equal(t, "t3a.medium", displayName)
 }

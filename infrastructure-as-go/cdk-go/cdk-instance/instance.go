@@ -14,7 +14,7 @@ import (
 )
 
 type InstanceStackProps struct {
-	awscdk.StackProps
+	StackProps awscdk.StackProps
 }
 
 func NewInstanceStack(scope constructs.Construct, id string, props *InstanceStackProps) awscdk.Stack {
@@ -81,7 +81,7 @@ func NewInstanceStack(scope constructs.Construct, id string, props *InstanceStac
 
 	monolith := ec2.NewInstance(stack, aws.String("monolith"),
 		&ec2.InstanceProps{
-			InstanceType:  ec2.InstanceType_Of(ec2.InstanceClass_MEMORY5_AMD, ec2.InstanceSize_LARGE),
+			InstanceType:  ec2.InstanceType_Of(ec2.InstanceClass_BURSTABLE3_AMD, ec2.InstanceSize_MEDIUM),
 			MachineImage:  linuxImage,
 			BlockDevices: &[]*ec2.BlockDevice{rootVolume},
 			Vpc:           vpc,
@@ -95,11 +95,23 @@ func NewInstanceStack(scope constructs.Construct, id string, props *InstanceStac
 		})
 
 	url := "http://" + *monolith.InstancePublicDnsName() 
-
 	awscdk.NewCfnOutput(stack, aws.String("URL"), &awscdk.CfnOutputProps{
 		Value:       &url,
+		Description: aws.String("URL"),
+	})
+	
+	// begin outputip
+	awscdk.NewCfnOutput(stack, aws.String("IP"), &awscdk.CfnOutputProps{
+		Value:       monolith.InstancePublicIp(),
 		Description: aws.String("monolith IP"),
 	})
+	// end outputip
+	// begin outputid
+	awscdk.NewCfnOutput(stack, aws.String("ID"), &awscdk.CfnOutputProps{
+		Value:       monolith.InstanceId(),
+		Description: aws.String("monolith ID"),
+	})
+	// end outputid
 
 
 	return stack
