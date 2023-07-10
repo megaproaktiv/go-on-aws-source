@@ -13,7 +13,7 @@ env:
   CDK_DEFAULT_ACCOUNT: 
     sh: aws sts get-caller-identity --query Account --output text
 
-
+# begin subtasks
 includes:
   app:
     taskfile: ./app/Taskfile.yml
@@ -21,5 +21,5 @@ includes:
   infra:
     taskfile: ./infra/Taskfile.yml
     dir: ./infra
-    
+# end subtasks    
 tasks:

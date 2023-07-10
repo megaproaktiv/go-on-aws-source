@@ -3,10 +3,10 @@
 ## Build Management only for go
 
 version: '3'
-
+# begin env
 env:
   AWS_DEFAULT_REGION: eu-central-1
-
+#end env
 tasks:
   default:
     deps: [build]
@@ -23,7 +23,7 @@ tasks:
     generates:
       - dist/main.zip
     silent: true
-
+# begin vars
   fastdeploy:
     desc: Deploy only lambda
     deps: [build]
@@ -32,7 +32,7 @@ tasks:
         sh: aws ssm get-parameter --name "/goa-serverless/handler" --query "Parameter.Value" --output text
     cmds:
       - aws lambda update-function-code --function-name  {{.FN}} --zip-file fileb://dist/main.zip
-
+#end vars
   showtable:
     desc: scan Table
     env: 
@@ -89,10 +89,11 @@ tasks:
     deps: [build]
     cmds:
       - go test -v
-
+# begin deps
   test:
     desc: call go test
     deps: [build]
     cmds:
       - go test -v
+# end deps      
 
