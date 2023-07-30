@@ -31,7 +31,7 @@ func NewHelloWorldStack(scope constructs.Construct, id string, props *HelloWorld
 	if err != nil {
 		log.Println(err)
 	}
-	lambdaPath := filepath.Join(path, "../dist/main.zip")
+	lambdaPath := filepath.Join(path, "../dist/bootstrap.zip")
 
 	//begin lambda
 	fn := lambda.NewFunction(stack, aws.String("simplelambda"), 

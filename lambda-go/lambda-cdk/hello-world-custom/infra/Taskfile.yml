@@ -3,7 +3,7 @@
 version: '3'
 
 vars:
-  version: 2.80.0
+  version: 2.89.0
   PROFILE: letstrain
 
 
