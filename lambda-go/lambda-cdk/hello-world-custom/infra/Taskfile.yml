@@ -1,0 +1,51 @@
+# https://taskfile.dev
+# infra
+version: '3'
+
+vars:
+  version: 2.80.0
+  PROFILE: letstrain
+
+
+env:
+  AWS_DEFAULT_REGION: eu-central-1
+  CDK_DEFAULT_REGION: eu-central-1
+  CDK_DEFAULT_ACCOUNT: 
+    sh: aws sts get-caller-identity --query Account --output text
+
+tasks:
+
+  update:
+    desc: install latest cdk and other modules
+    cmds:
+      - go get -d github.com/aws/aws-cdk-go/awscdk/v2@v{{.version}}
+
+  list:
+    desc: List stacks 
+    cmds:
+      - npx aws-cdk@{{.version}} ls
+    
+
+  diff:
+    desc: Show stack differences
+    cmds:
+      - npx aws-cdk@{{.version}} diff
+    
+  deploy:
+    desc: deploy stack without asking
+    cmds:
+      - cmd: echo Profile {{.PROFILE}}
+        silent: true
+      - npx {{.npxoptions}} aws-cdk@{{.version}}  deploy  --require-approval never --profile {{.PROFILE}}
+
+  destroy:
+    desc: destroy stack without asking
+    cmds:
+      - cmd: echo Profile{{.PROFILE}}
+        silent: true
+      -  npx  aws-cdk@{{.version}}  destroy --force --profile {{.PROFILE}}
+
+  test:
+    desc: CDK unit test
+    cmds:
+      - go test .    

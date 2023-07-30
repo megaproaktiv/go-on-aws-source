@@ -1,0 +1,41 @@
+# https://taskfile.dev
+
+version: '3'
+
+vars:
+  GREETING: Hello, World!
+
+tasks:
+
+  
+
+  build:
+    desc: build go
+    cmds:
+#begin build    
+      - go mod tidy
+      - env GOOS=linux GOARCH=arm64 CGO_ENABLED=0 go build -tags lambda.norpc -ldflags="-s -w" -o ../dist/bootstrap main.go
+      - chmod +x ../dist/bootstrap
+      - cd ../dist && zip bootstrap.zip bootstrap
+#end build      
+    sources:
+      - ./*.go
+      - main/*.go
+      - Taskfile.yml
+    generates:
+      - ../dist/bootstrap
+    silent: true
+
+  fastdeploy:
+    desc: Deploy only lambda
+    deps: [build]
+    vars:
+      FN:      
+        sh: aws ssm get-parameter --name "simplefunction" --query "Parameter.Value" --output text
+    cmds:
+      - aws lambda update-function-code --function-name  {{.FN}} --zip-file fileb://../dist/bootstrap.zip
+
+  test:
+    desc: all go test
+    cmds:
+      - go test . 
