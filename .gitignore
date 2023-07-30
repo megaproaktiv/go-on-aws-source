@@ -38,3 +38,4 @@ aws-go-sdk-v2/s3copy/testdata/test.txt
 aws-go-sdk-v2/s3/manyfiles/create30k-g
 aws-go-sdk-v2/s3/manyfiles/create30k-i
 aws-go-sdk-v2/dynamodb/crud/go/create-table-books/dist
+infrastructure-as-go/cdk-go/lambda/deploy_custom_runtime/dist
