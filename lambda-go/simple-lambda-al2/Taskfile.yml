@@ -12,9 +12,9 @@ tasks:
     desc: build go
     cmds:
       - mkdir -p dist
-      - env GOOS=linux GOARCH=amd64 go build -ldflags="-s -w" -o ./dist/main main.go
+      - env GOOS=linux GOARCH=amd64 go build -ldflags="-s -w" -o ./dist/bootstrap main.go
       - chmod +x ./dist/main
-      - cd ./dist && zip main.zip main
+      - cd ./dist && zip bootstrap.zip bootstrap
     sources:
       - ./*.go
       - main/*.go
