@@ -2,12 +2,14 @@
 
 version: '3'
 
+# begin deploy
 vars:
   NAME: gosimple
 
+# end deploy
+
 tasks:
-
-
+# begin build
   build:
     desc: build go
     cmds:
@@ -15,7 +17,8 @@ tasks:
       - env GOOS=linux GOARCH=amd64 go build -ldflags="-s -w" -o ./dist/bootstrap main.go
       - chmod +x ./dist/main
       - cd ./dist && zip bootstrap.zip bootstrap
-    sources:
+# end build
+      sources:
       - ./*.go
       - main/*.go
       - Taskfile.yml
@@ -23,12 +26,14 @@ tasks:
       - ../dist/main
     silent: true
 
+# begin deploy
   deploy:
     desc: Deploy only Lambda function
     deps: [build]
     cmds:
       - aws lambda update-function-code --function-name  gosimple --zip-file fileb://./dist/bootstrap.zip
-
+# end deploy
+#
   deploy-ssm:
     desc: Deploy only lambda
     deps: [build]
