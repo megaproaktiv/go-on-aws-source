@@ -71,7 +71,7 @@ func NewDslStack(scope constructs.Construct, id string, props *DslStackProps) aw
 		ParameterName:  aws.String("/goa-serverless/bucket"),
 		StringValue: bucky.BucketName(),
 	},
-)
+	)
 	// Tell Lambda the dynamic bucket name
 	//begin instrumentation
 	myHandler.AddEnvironment(aws.String("Bucket"), bucky.BucketName(), nil);
