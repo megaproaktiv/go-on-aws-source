@@ -42,3 +42,4 @@ infrastructure-as-go/cdk-go/lambda/deploy_custom_runtime/dist
 lambda-go/lambda-cdk/hello-world-custom/dist
 go-the-language/slog/goa.log
 lambda-go/simple-lambda-al2/dist
+bedrock/amazon-bedrock-samples/responsible-ai/guardrails-for-amazon-bedrock-samples/guardrail/__debug_bin2090599817
