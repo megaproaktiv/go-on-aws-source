@@ -2,6 +2,8 @@ package guardrail
 
 import (
 	"context"
+	"errors"
+	"fmt"
 
 	"github.com/aws/aws-sdk-go-v2/aws"
 	"github.com/aws/aws-sdk-go-v2/service/bedrock"
@@ -66,6 +68,11 @@ func DeleteGuardRailFinancialAdvice(id *string) error {
 	}
 	_, err := Client.DeleteGuardrail(context.TODO(), params)
 	if err != nil {
+		var notFoundErr *types.ResourceNotFoundException
+		if errors.As(err, &notFoundErr) {
+			fmt.Println("Guardrail not found, nothing to delete.")
+			return nil
+		}
 		return err
 	}
 	return nil
