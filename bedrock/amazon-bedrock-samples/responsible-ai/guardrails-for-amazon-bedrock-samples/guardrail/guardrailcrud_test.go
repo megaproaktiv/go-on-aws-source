@@ -8,6 +8,7 @@ import (
 )
 
 func TestCreateGuardCRUD(t *testing.T) {
+
 	t.Logf("CreateGuardRail")
 	id, err := guardrail.CreateGuardRailFinancialAdvice()
 	assert.NilError(t, err)

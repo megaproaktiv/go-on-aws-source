@@ -4,6 +4,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"time"
 
 	"github.com/aws/aws-sdk-go-v2/aws"
 	"github.com/aws/aws-sdk-go-v2/service/bedrock"
@@ -11,12 +12,12 @@ import (
 )
 
 const FINANCIAL_GUARDRAIL = "financialguardrail"
+const VERSION = "DRAFT"
 
 // Create a finnancial guardrail
 func CreateGuardRailFinancialAdvice() (*string, error) {
 	params := &bedrock.CreateGuardrailInput{
 		Name: aws.String(FINANCIAL_GUARDRAIL),
-
 		TopicPolicyConfig: &types.GuardrailTopicPolicyConfig{
 			TopicsConfig: []types.GuardrailTopicConfig{
 				{
@@ -62,6 +63,8 @@ func GetIdGuardRailFinancialAdvice() (*string, error) {
 }
 
 // Delete the guardrail
+// To delete a guardrail, only specify the ARN of the guardrail in the guardrailIdentifier field.
+// If you delete a guardrail, all of its versions will be deleted.
 func DeleteGuardRailFinancialAdvice(id *string) error {
 	params := &bedrock.DeleteGuardrailInput{
 		GuardrailIdentifier: id,
@@ -75,6 +78,34 @@ func DeleteGuardRailFinancialAdvice(id *string) error {
 		}
 		return err
 	}
+
+	maxCount := 10
+	count := 0
+	for {
+		resp, err := Client.GetGuardrail(context.TODO(), &bedrock.GetGuardrailInput{
+			GuardrailIdentifier: id,
+		})
+		if err != nil {
+			var notFoundErr *types.ResourceNotFoundException
+			if errors.As(err, &notFoundErr) {
+				fmt.Println("Guardrail is deleted.")
+				return nil
+			} else {
+				fmt.Println("Error getting guardrail status")
+				return err
+			}
+		}
+		if resp.Status == "DELETING" {
+			fmt.Print(".")
+			time.Sleep(1 * time.Second)
+		}
+		count++
+		if count > maxCount {
+			return errors.New("Timeout waiting for guardrail to be deleted")
+
+		}
+	}
+
 	return nil
 
 }

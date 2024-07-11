@@ -5,7 +5,6 @@ import (
 	"guardrail/guardrail"
 	"strings"
 	"testing"
-	"time"
 
 	"github.com/aws/aws-sdk-go-v2/aws"
 	"gotest.tools/v3/assert"
@@ -14,9 +13,13 @@ import (
 func TestDenyGuardRail(t *testing.T) {
 
 	prompt := "What is a checking account?"
-	err := guardrail.DeleteGuardRailFinancialAdvice(aws.String(guardrail.FINANCIAL_GUARDRAIL))
+	id, err := guardrail.GetIdGuardRailFinancialAdvice()
 	assert.NilError(t, err)
-	time.Sleep(5 * time.Second)
+	if id != nil {
+		err = guardrail.DeleteGuardRailFinancialAdvice(id)
+		assert.NilError(t, err)
+	}
+
 	gid, err := guardrail.CreateGuardRailFinancialAdvice()
 	assert.NilError(t, err)
 
@@ -33,6 +36,8 @@ func TestDenyGuardRail(t *testing.T) {
 	deny := containsIgnoreCase(output, denyWord)
 	t.Log("Answer is: ", output)
 	assert.Check(t, deny, "SAnswer should be denied")
+
+	_ = guardrail.DeleteGuardRailFinancialAdvice(aws.String(guardrail.FINANCIAL_GUARDRAIL))
 
 }
 
