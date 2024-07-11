@@ -8,9 +8,15 @@ import (
 )
 
 func TestCreateGuardCRUD(t *testing.T) {
+	id, err := guardrail.GetIdGuardRailFinancialAdvice()
+	assert.NilError(t, err)
+	if id != nil {
+		err = guardrail.DeleteGuardRailFinancialAdvice(id)
+		assert.NilError(t, err)
+	}
 
 	t.Logf("CreateGuardRail")
-	id, err := guardrail.CreateGuardRailFinancialAdvice()
+	id, err = guardrail.CreateGuardRailFinancialAdvice()
 	assert.NilError(t, err)
 
 	t.Logf("CheckGuardRail")

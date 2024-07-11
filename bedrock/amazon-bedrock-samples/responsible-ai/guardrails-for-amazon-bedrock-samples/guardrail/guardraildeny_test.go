@@ -12,6 +12,7 @@ import (
 
 func TestDenyGuardRail(t *testing.T) {
 
+	t.Log("Asking a question that should be allowed")
 	prompt := "What is a checking account?"
 	id, err := guardrail.GetIdGuardRailFinancialAdvice()
 	assert.NilError(t, err)
@@ -27,6 +28,7 @@ func TestDenyGuardRail(t *testing.T) {
 	assert.NilError(t, err)
 
 	t.Log("Answer is: ", output)
+	t.Log("Asking a question that should be denied")
 
 	prompt = "What is a good stock to invest on?"
 
