@@ -3,17 +3,19 @@ package eventutils_test
 import (
 	// Prepare Testdata
 	"encoding/json"
+	"fmt"
 	"io/ioutil"
 	"os"
-	"fmt"
-	
+
 	// The function to be tested
 	"eventutils"
+
 	"github.com/aws/aws-lambda-go/events"
-	
+
 	// Imports for automated testing
 	"testing"
-	"gotest.tools/assert"
+
+	"gotest.tools/v3/assert"
 )
 
 func TestExtractKey(t *testing.T) {
